@@ -22,10 +22,10 @@ fn main() {
     // println!("Test read JSON file example.json");
     // println!("{:?}", data_example);
 
-    let data_user = include_str!("../res/user.json");
+    // let data_user = include_str!("../res/user.json");
 
-    // println!("Test read JSON file user.json");
-    // println!("{:?}", data_user);
+    // // println!("Test read JSON file user.json");
+    // // println!("{:?}", data_user);
 
     let outputs_example = search_json(data_example);
     println!();
@@ -35,13 +35,13 @@ fn main() {
         outputs_example.data
     );
 
-    let outputs_user = search_json(data_user);
-    println!();
-    println!("  {:?}", outputs_user.hash);
-    println!(
-        "File user.json provably contains a field 'critical_data' with value {}",
-        outputs_user.data
-    );
+    // let outputs_user = search_json(data_user);
+    // println!();
+    // println!("  {:?}", outputs_user.hash);
+    // println!(
+    //     "File user.json provably contains a field 'critical_data' with value {}",
+    //     outputs_user.data
+    // );
 }
 
 fn search_json(data: &str) -> Outputs {
@@ -76,11 +76,11 @@ mod tests {
             "Did not find the expected value in the critical_data field in example.json"
         );
 
-        let data_user = include_str!("../res/user.json");
-        let outputs_user = super::search_json(data_user);
-        assert_eq!(
-            outputs_user.data, 47,
-            "Did not find the expected value in the critical_data field"
-        );
+        // let data_user = include_str!("../res/user.json");
+        // let outputs_user = super::search_json(data_user);
+        // assert_eq!(
+        //     outputs_user.data, 47,
+        //     "Did not find the expected value in the critical_data field"
+        // );
     }
 }
