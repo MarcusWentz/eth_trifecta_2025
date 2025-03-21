@@ -48,10 +48,36 @@ fn main() {
     println!("{}", longitude);
     println!("{}", website);
 
-    // Test if logic with panic.
+    // Check JSON values with expected values.
+
+    // Check age range.
     if age < 20 || age > 40  { 
         // Panics with age 19 and 41 as expected.
         println!("Out of age range: 20 to 40.");
+        panic!();
+    }
+
+    // Louvre Museum in Paris, France coordinates:     
+    // "latitude": 48.860294,
+    // "longitude": 2.338629,
+
+    // Check latitude range.
+    if latitude < 48.0 || latitude > 50.0  { 
+        // Panics with latitude 47.0 and 51.0 as expected.
+        println!("Out of latitude range: 48 to 50.");
+        panic!();
+    }
+
+    // Check longitude range.
+    if longitude < 1.0 || longitude > 3.0  { 
+        // Panics with longitude 0.0 and 4.0 as expected.
+        println!("Out of longitude range: 1 to 3.");
+        panic!();
+    }
+
+    // Check website URL string.
+    if website != "https://www.google.com/" { 
+        println!("Website does not match match expected website 'https://www.google.com/'.");
         panic!();
     }
 
