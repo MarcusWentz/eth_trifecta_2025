@@ -1,6 +1,15 @@
 {
     "boolean_field": true,
     "critical_data": 47,
+    "age": 30,
+    "coordinates": {
+        "latitude": "48.860294",
+        "longitude": "2.338629"
+    },
+    "websites": {
+        "1": "https://www.google.com/",
+        "2": "https://www.youtube.com/"
+    },
     "obj_field": {
         "string_subfield": "example",
         "array_subfield": [
