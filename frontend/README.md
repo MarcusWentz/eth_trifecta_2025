@@ -22,7 +22,7 @@ ZKads is a revolutionary decentralized advertising platform leveraging zero-know
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/MarcusWentz/eth_trifecta_2025/
 cd frontend
 ```
 
