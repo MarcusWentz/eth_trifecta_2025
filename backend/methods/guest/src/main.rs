@@ -21,6 +21,18 @@ use risc0_zkvm::{
 
 fn main() {
     let data: String = env::read();
+
+    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
+    // let data2: String = env::read();
+
+    println!("GUEST PROGRAM START DEBUG");
+    println!("{:?}", data);
+
+    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
+    // println!("{:?}", data2);
+
+    println!("GUEST PROGRAM END DEBUG");
+
     let sha = *Impl::hash_bytes(&data.as_bytes());
     let data = parse(&data).unwrap();
     let proven_val = data["critical_data"].as_u32().unwrap();
