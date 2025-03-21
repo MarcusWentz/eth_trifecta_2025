@@ -37,8 +37,18 @@ fn main() {
     let data = parse(&data).unwrap();
     let proven_val = data["critical_data"].as_u32().unwrap();
 
+    let age = data["age"].as_u32().unwrap();
+
+    println!("{}", data["critical_data"].as_u32().unwrap());
+    println!("{}", age);
+    println!("{}", data["latitude"].as_f32().unwrap());
+    println!("{}", data["longitude"].as_f32().unwrap());
+    println!("{}", data["website"]);
+
     // Test if logic with panic.
-    if 1 != 1 {
+    if age < 20 || age > 40  { 
+        // Panics with age 19 and 41 as expected.
+        println!("Out of age range: 20 to 40.");
         panic!();
     }
 
