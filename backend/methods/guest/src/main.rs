@@ -24,9 +24,17 @@ fn main() {
     let sha = *Impl::hash_bytes(&data.as_bytes());
     let data = parse(&data).unwrap();
     let proven_val = data["critical_data"].as_u32().unwrap();
+
+    // Test if logic with panic.
+    if 1 != 1 {
+        panic!();
+    }
+
     let out = Outputs {
         data: proven_val,
         hash: sha,
+        // hash_1: sha_example,
+        // hash_2: sha_user,
     };
     env::commit(&out);
 }

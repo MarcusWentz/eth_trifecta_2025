@@ -19,4 +19,6 @@ use serde::{Deserialize, Serialize};
 pub struct Outputs {
     pub data: u32,
     pub hash: Digest,
+    // pub hash_1: Digest,
+    // pub hash_2: Digest,
 }

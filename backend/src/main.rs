@@ -54,6 +54,11 @@ fn search_json(data: &str) -> Outputs {
     // Obtain the default prover.
     let prover = default_prover();
 
+    // // Test prover.add_input from tutorial 13:08 https://www.youtube.com/watch?v=6vIgBHx61vc
+    // // "add_input" method not found in `Rc<dyn Prover>`
+    // // looks like a deprecated method.
+    // prover.add_input(&to_vec(&data).unwrap()).unwrap();
+
     // Produce a receipt by proving the specified ELF binary.
     let receipt = prover.prove(env, SEARCH_JSON_ELF).unwrap().receipt;
 
