@@ -1,17 +1,3 @@
-// Copyright 2024 RISC Zero, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 use json::parse;
 use json_core::Outputs;
 use risc0_zkvm::{
@@ -22,70 +8,80 @@ use risc0_zkvm::{
 fn main() {
     let data: String = env::read();
 
-    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
-    // let data2: String = env::read();
-
     println!("GUEST PROGRAM START DEBUG");
     println!("{:?}", data);
-
-    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
-    // println!("{:?}", data2);
-
     println!("GUEST PROGRAM END DEBUG");
 
     let sha = *Impl::hash_bytes(&data.as_bytes());
-    let data = parse(&data).unwrap();
 
-    let proven_val : u32 = data["critical_data"].as_u32().unwrap();
-    let age : u32 = data["age"].as_u32().unwrap();
-    let latitude : f32 = data["latitude"].as_f32().unwrap();
-    let longitude : f32 = data["longitude"].as_f32().unwrap();
-    let website : String = data["website"].to_string();
+    let parsed: Value = serde_json::from_str(&data).expect("JSON parsing failed");
 
-    println!("{}", proven_val);
-    println!("{}", age);
-    println!("{}", latitude);
-    println!("{}", longitude);
-    println!("{}", website);
+    println!("Parsed JSON: {:?}", parsed);
 
-    // Check JSON values with expected values.
+    let boolean_field: bool = parsed.get("boolean_field").and_then(Value::as_bool).unwrap_or(false);
+    let proven_val: u32 = parsed.get("critical_data").and_then(Value::as_u64).unwrap_or(0) as u32;
+    let age: u32 = parsed.get("age").and_then(Value::as_u64).unwrap_or(0) as u32;
 
-    // Check age range.
-    if age < 20 || age > 40  { 
-        // Panics with age 19 and 41 as expected.
+    let latitude: f32 = parsed.get("latitude").and_then(Value::as_f64).unwrap_or(-1.0) as f32;
+    let longitude: f32 = parsed.get("longitude").and_then(Value::as_f64).unwrap_or(-1.0) as f32;
+
+    if let Some(websites) = parsed.get("websites").and_then(Value::as_object) {
+        println!("Found {} websites:", websites.len());
+        for (key, value) in websites.iter().take(3) {
+            println!("{}. {}", key, value.as_str().unwrap_or("Unknown"));
+        }
+    } else {
+        println!("No websites found.");
+    }
+
+    let obj_field = parsed.get("obj_field").and_then(Value::as_object);
+    let string_subfield: &str = obj_field
+        .and_then(|obj| obj.get("string_subfield"))
+        .and_then(Value::as_str)
+        .unwrap_or("");
+
+    let array_subfield = obj_field
+        .and_then(|obj| obj.get("array_subfield"))
+        .and_then(Value::as_array);
+
+    println!("Extracted values:");
+    println!("boolean_field: {}", boolean_field);
+    println!("proven_val: {}", proven_val);
+    println!("age: {}", age);
+    println!("latitude: {}", latitude);
+    println!("longitude: {}", longitude);
+    println!("string_subfield: {}", string_subfield);
+
+    if let Some(array) = array_subfield {
+        println!("array_subfield contains:");
+        for value in array {
+            if let Some(text) = value.as_str() {
+                println!("- {}", text);
+            }
+        }
+    } else {
+        println!("array_subfield is missing or empty.");
+    }
+
+    if !(20..=40).contains(&age) {
         println!("Out of age range: 20 to 40.");
         panic!();
     }
 
-    // Louvre Museum in Paris, France coordinates:     
-    // "latitude": 48.860294,
-    // "longitude": 2.338629,
-
-    // Check latitude range.
-    if latitude < 48.0 || latitude > 50.0  { 
-        // Panics with latitude 47.0 and 51.0 as expected.
+    if !(48.0..=50.0).contains(&latitude) {
         println!("Out of latitude range: 48 to 50.");
         panic!();
     }
 
-    // Check longitude range.
-    if longitude < 1.0 || longitude > 3.0  { 
-        // Panics with longitude 0.0 and 4.0 as expected.
+    if !(1.0..=3.0).contains(&longitude) {
         println!("Out of longitude range: 1 to 3.");
         panic!();
     }
 
-    // Check website URL string.
-    if website != "https://www.google.com/" { 
-        println!("Website does not match match expected website 'https://www.google.com/'.");
-        panic!();
-    }
+    let out = serde_json::json!({
+        "data": proven_val,
+        "hash": sha,
+    });
 
-    let out = Outputs {
-        data: proven_val,
-        hash: sha,
-        // hash_1: sha_example,
-        // hash_2: sha_user,
-    };
     env::commit(&out);
 }
