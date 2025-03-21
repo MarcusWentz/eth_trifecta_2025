@@ -15,3 +15,5 @@ build/
 
 # Ignore other unnecessary files
 .DS_Store
+
+.next
