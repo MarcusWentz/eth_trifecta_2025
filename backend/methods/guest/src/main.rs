@@ -35,15 +35,18 @@ fn main() {
 
     let sha = *Impl::hash_bytes(&data.as_bytes());
     let data = parse(&data).unwrap();
-    let proven_val = data["critical_data"].as_u32().unwrap();
 
-    let age = data["age"].as_u32().unwrap();
+    let proven_val : u32 = data["critical_data"].as_u32().unwrap();
+    let age : u32 = data["age"].as_u32().unwrap();
+    let latitude : f32 = data["latitude"].as_f32().unwrap();
+    let longitude : f32 = data["longitude"].as_f32().unwrap();
+    let website : String = data["website"].to_string();
 
-    println!("{}", data["critical_data"].as_u32().unwrap());
+    println!("{}", proven_val);
     println!("{}", age);
-    println!("{}", data["latitude"].as_f32().unwrap());
-    println!("{}", data["longitude"].as_f32().unwrap());
-    println!("{}", data["website"]);
+    println!("{}", latitude);
+    println!("{}", longitude);
+    println!("{}", website);
 
     // Test if logic with panic.
     if age < 20 || age > 40  { 
