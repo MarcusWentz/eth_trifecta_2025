@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use geo::{algorithm::contains::Contains, Point, Polygon};
 use json::{parse, JsonValue};
 use json_core::Outputs;
 use risc0_zkvm::{
@@ -81,7 +82,15 @@ fn main() {
         panic!();
     }
 
-    // TODO: Check that user is in geofence.
+    // Check that user is in geofence.
+    let polygon = Polygon::new(
+        geofence.iter().map(|x| Point::new(x[0], x[1])).collect(),
+        vec![],
+    );
+    let point = Point::new(coordinates[0], coordinates[1]);
+    if !polygon.contains(&point) {
+        panic!("User is not in geofence.");
+    }
 
     // Check that user has visited target domains.
     for domain in target_domains {
