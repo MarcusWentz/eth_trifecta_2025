@@ -1,11 +1,11 @@
 [package]
 version = "0.1.0"
-name = "fibonacci-program"
+name = "ad-qualification-program"
 edition = "2021"
 
 [dependencies]
 alloy-sol-types = { workspace = true }
 alloy-primitives = { workspace = true }
 sp1-zkvm = "4.0.0"
-fibonacci-lib = { path = "../lib" }
+ad-qualification-lib = { path = "../lib" }
 

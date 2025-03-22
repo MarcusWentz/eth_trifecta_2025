@@ -10,7 +10,7 @@ sp1_zkvm::entrypoint!(main);
 
 use alloy_primitives::keccak256;
 use alloy_sol_types::SolType;
-use fibonacci_lib::{check_target_user, PublicValuesStruct};
+use ad_qualification_lib::{check_target_user, PublicValuesStruct};
 
 pub fn main() {
     // Read an input to the program.
