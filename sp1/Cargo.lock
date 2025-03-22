@@ -3,6 +3,41 @@
 version = 4
 
 [[package]]
+name = "ad-qualificaion-script"
+version = "0.1.0"
+dependencies = [
+ "ad-qualification-lib",
+ "alloy-sol-types 0.7.7",
+ "clap",
+ "dotenv",
+ "hex",
+ "serde",
+ "serde_json",
+ "sp1-build",
+ "sp1-sdk",
+ "tracing",
+]
+
+[[package]]
+name = "ad-qualification-lib"
+version = "0.1.0"
+dependencies = [
+ "alloy-sol-types 0.7.7",
+ "geo",
+ "json",
+]
+
+[[package]]
+name = "ad-qualification-program"
+version = "0.1.0"
+dependencies = [
+ "ad-qualification-lib",
+ "alloy-primitives 0.7.7",
+ "alloy-sol-types 0.7.7",
+ "sp1-zkvm",
+]
+
+[[package]]
 name = "addchain"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1703,41 +1738,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
-]
-
-[[package]]
-name = "fibonacci-lib"
-version = "0.1.0"
-dependencies = [
- "alloy-sol-types 0.7.7",
- "geo",
- "json",
-]
-
-[[package]]
-name = "fibonacci-program"
-version = "0.1.0"
-dependencies = [
- "alloy-primitives 0.7.7",
- "alloy-sol-types 0.7.7",
- "fibonacci-lib",
- "sp1-zkvm",
-]
-
-[[package]]
-name = "fibonacci-script"
-version = "0.1.0"
-dependencies = [
- "alloy-sol-types 0.7.7",
- "clap",
- "dotenv",
- "fibonacci-lib",
- "hex",
- "serde",
- "serde_json",
- "sp1-build",
- "sp1-sdk",
- "tracing",
 ]
 
 [[package]]

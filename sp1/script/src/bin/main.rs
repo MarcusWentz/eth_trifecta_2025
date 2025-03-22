@@ -12,11 +12,11 @@
 
 use alloy_sol_types::SolType;
 use clap::Parser;
-use fibonacci_lib::PublicValuesStruct;
+use ad_qualification_lib::PublicValuesStruct;
 use sp1_sdk::{include_elf, ProverClient, SP1Stdin};
 
 /// The ELF (executable and linkable format) file for the Succinct RISC-V zkVM.
-pub const FIBONACCI_ELF: &[u8] = include_elf!("fibonacci-program");
+pub const AD_QUALIFICATION_ELF: &[u8] = include_elf!("ad-qualification-program");
 
 /// The arguments for the command.
 #[derive(Parser, Debug)]
@@ -61,7 +61,7 @@ fn main() {
 
     if args.execute {
         // Execute the program
-        let (output, report) = client.execute(FIBONACCI_ELF, &stdin).run().unwrap();
+        let (output, report) = client.execute(AD_QUALIFICATION_ELF, &stdin).run().unwrap();
         println!("Program executed successfully.");
 
         // Read the output.
@@ -70,7 +70,7 @@ fn main() {
         println!("user_data_hash: {}", user_data_hash);
         println!("criteria_hash: {}", criteria_hash);
 
-        let successful = fibonacci_lib::check_target_user(args.user_data.clone(), args.criteria.clone());
+        let successful = ad_qualification_lib::check_target_user(args.user_data.clone(), args.criteria.clone());
         assert!(successful);
         println!("Values are correct!");
 
@@ -78,7 +78,7 @@ fn main() {
         println!("Number of cycles: {}", report.total_instruction_count());
     } else {
         // Setup the program for proving.
-        let (pk, vk) = client.setup(FIBONACCI_ELF);
+        let (pk, vk) = client.setup(AD_QUALIFICATION_ELF);
 
         // Generate the proof
         let proof = client
