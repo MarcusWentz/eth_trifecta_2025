@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use json::parse;
+use geo::{algorithm::contains::Contains, Point, Polygon};
+use json::{parse, JsonValue};
 use json_core::Outputs;
 use risc0_zkvm::{
     guest::env,
@@ -20,72 +21,75 @@ use risc0_zkvm::{
 };
 
 fn main() {
-    let data: String = env::read();
+    let user_data: String = env::read();
+    let criteria: String = env::read();
 
-    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
-    // let data2: String = env::read();
+    let user_data_hash = *Impl::hash_bytes(user_data.as_bytes());
+    let user_data = parse(&user_data).unwrap();
+    let criteria_hash = *Impl::hash_bytes(criteria.as_bytes());
+    let criteria = parse(&criteria).unwrap();
 
-    println!("GUEST PROGRAM START DEBUG");
-    println!("{:?}", data);
+    // Gather user data from JSON
+    let age: u32 = user_data["age"].as_u32().unwrap();
+    let coordinates: Vec<f64> = match user_data["coordinates"].clone() {
+        JsonValue::Array(c) => c.iter().map(|x| x.as_f64().unwrap()).collect(),
+        _ => panic!("Coordinates not found."),
+    };
+    let history: Vec<String> = match user_data["history"].clone() {
+        JsonValue::Array(h) => h.iter().map(|x| x.as_str().unwrap().to_string()).collect(),
+        _ => panic!("History not found."),
+    };
 
-    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
-    // println!("{:?}", data2);
-
-    println!("GUEST PROGRAM END DEBUG");
-
-    let sha = *Impl::hash_bytes(&data.as_bytes());
-    let data = parse(&data).unwrap();
-
-    let proven_val : u32 = data["critical_data"].as_u32().unwrap();
-    let age : u32 = data["age"].as_u32().unwrap();
-    let latitude : f32 = data["latitude"].as_f32().unwrap();
-    let longitude : f32 = data["longitude"].as_f32().unwrap();
-    let website : String = data["website"].to_string();
-
-    println!("{}", proven_val);
-    println!("{}", age);
-    println!("{}", latitude);
-    println!("{}", longitude);
-    println!("{}", website);
-
-    // Check JSON values with expected values.
+    // Gather criteria from JSON
+    let age_range: Vec<u32> = match criteria["age_range"].clone() {
+        JsonValue::Array(a) => a.iter().map(|x| x.as_u32().unwrap()).collect(),
+        _ => panic!("Age range not found."),
+    };
+    let geofence: Vec<Vec<f64>> = match criteria["geofence"].clone() {
+        JsonValue::Array(g) => g
+            .iter()
+            .map(|x| match x {
+                JsonValue::Array(a) => a.iter().map(|y| y.as_f64().unwrap()).collect(),
+                _ => panic!("Geofence not found."),
+            })
+            .collect(),
+        _ => panic!("Geofence not found."),
+    };
+    let target_domains: Vec<String> = match criteria["target_domains"].clone() {
+        JsonValue::Array(t) => t.iter().map(|x| x.as_str().unwrap().to_string()).collect(),
+        _ => panic!("Target domains not found."),
+    };
 
     // Check age range.
-    if age < 20 || age > 40  { 
-        // Panics with age 19 and 41 as expected.
-        println!("Out of age range: 20 to 40.");
-        panic!();
+    if age < age_range[0] || age > age_range[1] {
+        panic!(
+            "Out of age range: {} not in {} to {}",
+            age, age_range[0], age_range[1]
+        );
     }
 
-    // Louvre Museum in Paris, France coordinates:     
-    // "latitude": 48.860294,
-    // "longitude": 2.338629,
-
-    // Check latitude range.
-    if latitude < 48.0 || latitude > 50.0  { 
-        // Panics with latitude 47.0 and 51.0 as expected.
-        println!("Out of latitude range: 48 to 50.");
-        panic!();
+    // Check that user is in geofence.
+    let polygon = Polygon::new(
+        geofence.iter().map(|x| Point::new(x[0], x[1])).collect(),
+        vec![],
+    );
+    let point = Point::new(coordinates[0], coordinates[1]);
+    if !polygon.contains(&point) {
+        panic!("User is not in geofence.");
     }
 
-    // Check longitude range.
-    if longitude < 1.0 || longitude > 3.0  { 
-        // Panics with longitude 0.0 and 4.0 as expected.
-        println!("Out of longitude range: 1 to 3.");
-        panic!();
+    // Check that user has visited target domains.
+    for domain in target_domains {
+        if !history.contains(&domain) {
+            panic!("User has not visited domain: {}", domain);
+        }
     }
 
-    // Check website URL string.
-    if website != "https://www.google.com/" { 
-        println!("Website does not match match expected website 'https://www.google.com/'.");
-        panic!();
-    }
+    println!("All checks passed.");
 
     let out = Outputs {
-        data: proven_val,
-        hash: sha,
-        // hash_1: sha_example,
-        // hash_2: sha_user,
+        user_data_hash,
+        criteria_hash,
     };
     env::commit(&out);
 }
