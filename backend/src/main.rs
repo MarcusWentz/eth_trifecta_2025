@@ -17,7 +17,8 @@ use json_methods::SEARCH_JSON_ELF;
 use risc0_zkvm::{default_prover, ExecutorEnv};
 
 fn main() {
-    let data_example = include_str!("../res/example.json");
+    let user_data = include_str!("../res/user.json");
+    let criteria = include_str!("../res/criteria.json");
 
     // println!("Test read JSON file example.json");
     // println!("{:?}", data_example);
@@ -27,12 +28,12 @@ fn main() {
     // // println!("Test read JSON file user.json");
     // // println!("{:?}", data_user);
 
-    let outputs_example = search_json(data_example);
+    let outputs_example = search_json(user_data, criteria);
     println!();
     println!("  {:?}", outputs_example.hash);
     println!(
         "File example.json provably contains a field 'critical_data' with value {}",
-        outputs_example.data
+        outputs_example.age
     );
 
     // let outputs_user = search_json(data_user);
@@ -44,9 +45,11 @@ fn main() {
     // );
 }
 
-fn search_json(data: &str) -> Outputs {
+fn search_json(user_data: &str, criteria: &str) -> Outputs {
     let env = ExecutorEnv::builder()
-        .write(&data)
+        .write(&user_data)
+        .unwrap()
+        .write(&criteria)
         .unwrap()
         .build()
         .unwrap();
@@ -69,10 +72,11 @@ fn search_json(data: &str) -> Outputs {
 mod tests {
     #[test]
     fn main() {
-        let data_example = include_str!("../res/example.json");
-        let outputs_example = super::search_json(data_example);
+        let user_data = include_str!("../res/user.json");
+        let criteria = include_str!("../res/criteria.json");
+        let outputs_example = super::search_json(user_data, criteria);
         assert_eq!(
-            outputs_example.data, 47,
+            outputs_example.age, 30,
             "Did not find the expected value in the critical_data field in example.json"
         );
 
