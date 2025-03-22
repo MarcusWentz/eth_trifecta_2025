@@ -17,8 +17,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub struct Outputs {
-    pub age: u32,
-    pub hash: Digest,
-    // pub hash_1: Digest,
-    // pub hash_2: Digest,
+    pub user_data_hash: Digest,
+    pub criteria_hash: Digest,
 }

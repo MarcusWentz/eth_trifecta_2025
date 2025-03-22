@@ -24,30 +24,18 @@ fn main() {
     let user_data: String = env::read();
     let criteria: String = env::read();
 
-    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
-    // let data2: String = env::read();
-
-    println!("GUEST PROGRAM START DEBUG");
-    println!("{:?}", user_data);
-    println!("{:?}", criteria);
-
-    // // Error: called `Result::unwrap()` on an `Err` value: DeserializeUnexpectedEnd
-    // println!("{:?}", data2);
-
-    println!("GUEST PROGRAM END DEBUG");
-
-    let sha = *Impl::hash_bytes(&user_data.as_bytes());
-    let data = parse(&user_data).unwrap();
+    let user_data_hash = *Impl::hash_bytes(user_data.as_bytes());
+    let user_data = parse(&user_data).unwrap();
+    let criteria_hash = *Impl::hash_bytes(criteria.as_bytes());
     let criteria = parse(&criteria).unwrap();
-    println!("{:?}", data);
 
     // Gather user data from JSON
-    let age: u32 = data["age"].as_u32().unwrap();
-    let coordinates: Vec<f64> = match data["coordinates"].clone() {
+    let age: u32 = user_data["age"].as_u32().unwrap();
+    let coordinates: Vec<f64> = match user_data["coordinates"].clone() {
         JsonValue::Array(c) => c.iter().map(|x| x.as_f64().unwrap()).collect(),
         _ => panic!("Coordinates not found."),
     };
-    let history: Vec<String> = match data["history"].clone() {
+    let history: Vec<String> = match user_data["history"].clone() {
         JsonValue::Array(h) => h.iter().map(|x| x.as_str().unwrap().to_string()).collect(),
         _ => panic!("History not found."),
     };
@@ -74,12 +62,10 @@ fn main() {
 
     // Check age range.
     if age < age_range[0] || age > age_range[1] {
-        // panics if age is out of range
-        println!(
+        panic!(
             "Out of age range: {} not in {} to {}",
             age, age_range[0], age_range[1]
         );
-        panic!();
     }
 
     // Check that user is in geofence.
@@ -101,6 +87,9 @@ fn main() {
 
     println!("All checks passed.");
 
-    let out = Outputs { age, hash: sha };
+    let out = Outputs {
+        user_data_hash,
+        criteria_hash,
+    };
     env::commit(&out);
 }

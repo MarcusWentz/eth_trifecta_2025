@@ -20,29 +20,10 @@ fn main() {
     let user_data = include_str!("../res/user.json");
     let criteria = include_str!("../res/criteria.json");
 
-    // println!("Test read JSON file example.json");
-    // println!("{:?}", data_example);
-
-    // let data_user = include_str!("../res/user.json");
-
-    // // println!("Test read JSON file user.json");
-    // // println!("{:?}", data_user);
-
     let outputs_example = search_json(user_data, criteria);
     println!();
-    println!("  {:?}", outputs_example.hash);
-    println!(
-        "File example.json provably contains a field 'critical_data' with value {}",
-        outputs_example.age
-    );
-
-    // let outputs_user = search_json(data_user);
-    // println!();
-    // println!("  {:?}", outputs_user.hash);
-    // println!(
-    //     "File user.json provably contains a field 'critical_data' with value {}",
-    //     outputs_user.data
-    // );
+    println!("user_data_hash: {:?}", outputs_example.user_data_hash);
+    println!("criteria_hash: {:?}", outputs_example.criteria_hash);
 }
 
 fn search_json(user_data: &str, criteria: &str) -> Outputs {
@@ -57,11 +38,6 @@ fn search_json(user_data: &str, criteria: &str) -> Outputs {
     // Obtain the default prover.
     let prover = default_prover();
 
-    // // Test prover.add_input from tutorial 13:08 https://www.youtube.com/watch?v=6vIgBHx61vc
-    // // "add_input" method not found in `Rc<dyn Prover>`
-    // // looks like a deprecated method.
-    // prover.add_input(&to_vec(&data).unwrap()).unwrap();
-
     // Produce a receipt by proving the specified ELF binary.
     let receipt = prover.prove(env, SEARCH_JSON_ELF).unwrap().receipt;
 
@@ -75,16 +51,8 @@ mod tests {
         let user_data = include_str!("../res/user.json");
         let criteria = include_str!("../res/criteria.json");
         let outputs_example = super::search_json(user_data, criteria);
-        assert_eq!(
-            outputs_example.age, 30,
-            "Did not find the expected value in the critical_data field in example.json"
-        );
 
-        // let data_user = include_str!("../res/user.json");
-        // let outputs_user = super::search_json(data_user);
-        // assert_eq!(
-        //     outputs_user.data, 47,
-        //     "Did not find the expected value in the critical_data field"
-        // );
+        print!("user_data_hash: {:?}\n", outputs_example.user_data_hash);
+        print!("criteria_hash: {:?}\n", outputs_example.criteria_hash);
     }
 }
