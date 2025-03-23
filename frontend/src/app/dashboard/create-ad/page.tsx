@@ -555,7 +555,7 @@ export default function CreateAdPage() {
               </CardContent>
             </Card>
             
-            <TabsContent value="targeting" className="space-y-4">
+            <div value="targeting" className="space-y-4">
               <div className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 p-4 text-sm mb-4">
                 <h4 className="font-medium text-indigo-400 mb-1 flex items-center">
                   <Shield className="h-4 w-4 mr-2" />
@@ -726,7 +726,7 @@ export default function CreateAdPage() {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-between pt-4 border-t border-slate-800">
               <div className="flex items-center gap-2">
