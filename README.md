@@ -1,4 +1,4 @@
-# SovereignAds
+![112135134](https://github.com/user-attachments/assets/d6c1f991-e2a0-42e6-8bd1-a75856757e2a)# SovereignAds
 
 ## Overview
 **Privacy-Preserving Ad Network Using ZKPs**
@@ -26,7 +26,8 @@ Key benefits include:
 ## Tech Stack
 | Technology | Description |
 |------------|------------|
-| ![SP1](https://raw.githubusercontent.com/succinctlabs/sp1/main/logo.png) **SP1 zkVM** | Zero-Knowledge Proof system for privacy-preserving verification |
+
+| ![SP1](https://github.com/user-attachments/assets/fcfef3a9-0a28-4151-8e89-23f6f0ad3b30) **SP1 zkVM** | Zero-Knowledge Proof system for privacy-preserving verification |
 | ![Rust](https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg) **Rust** | Backend for verification and ad logic |
 | ![Next.js](https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg) **Next.js** | Frontend framework for seamless UI experience |
 .
@@ -49,7 +50,7 @@ https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/risc0
 
 ## SP1
 
-https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/sp1
+
 
 ## Frontend
 
