@@ -12,10 +12,16 @@ Traditional ad networks collect and broker vast amounts of user data, often lead
 - Profiteering by ad networks at the expense of user security.
 
 ## Solution
-This project ensures **targeted advertising without private data revelation** by utilizing **SP1 zkVM** for zero-knowledge proofs. The system works as follows:
-1. **ZK Proof Generation:** Users generate a **zero-knowledge proof** of their data using **SP1 zkVM** without exposing private details.
-2. **Verification Against Ad Criteria:** The ZK proof is verified to check if the user qualifies for an ad, without revealing raw data.
-3. **Ad Display & Rewards:** If the user meets the criteria, the ad is shown, and they receive a **USDC reward** for viewing.
+Traditional digital advertising relies on massive data collection, where companies store and broker user information to target ads. This approach not only threatens user privacy but also creates risks of data breaches and unauthorized data sales.
+
+This project introduces a novel solution by leveraging Zero-Knowledge Proofs (ZKPs) to enable ad targeting without exposing personal data. Users’ data never leaves their devices, yet advertisers can still verify whether a user belongs to a target audience. This ensures privacy while maintaining ad relevance.
+
+Key benefits include:
+- **Targeted Ads without Data Exposure:** Advertisers can still reach the right audience without collecting user data.
+- **User Data Sovereignty:** Users retain complete control over their data, which never leaves their device.
+- **Fair Compensation:** Users are rewarded directly for ad interactions, aligning incentives between users and advertisers.
+- **Seamless Integration:** Ads are displayed directly on websites, ensuring a smooth experience for both users and businesses.
+
 
 ## Tech Stack
 - **SP1 zkVM & RISC Zero** – Used to create and verify **zero-knowledge proofs**.
