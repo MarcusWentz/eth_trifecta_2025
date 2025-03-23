@@ -6,7 +6,31 @@ that can generate a proof of any RISC-V program.
 ## Requirements
 
 - [Rust](https://rustup.rs/)
-- [SP1](https://docs.succinct.xyz/getting-started/install.html)
+- [SP1](https://docs.succinct.xyz/docs/sp1/getting-started/install)
+
+## Setup
+
+### Install SP1
+
+https://docs.succinct.xyz/docs/sp1/getting-started/install
+
+### Update SP1
+
+```shell
+sp1up
+```
+
+### Verify SP1 Cargo Install Version
+
+```shell
+cargo prove --version
+```
+
+### Test Run SP1 Proof With Input JSON file
+
+```shell
+RUSTUP_TOOLCHAIN=succinct cargo run --release -- --user-data "{\"age\":30,\"coordinates\":[37.807696,-122.413876],\"history\":[\"www.google.com\",\"www.youtube.com\",\"github.com\"]}" --criteria "{\"age_range\":[25,35],\"geofence\":[[38.300796,-123.276303],[38.914625,-121.694272],[37.607786,-120.106747],[36.785175,-120.947201],[36.727961,-122.28204]],\"target_domains\":[\"github.com\"]}" --execute
+```
 
 ## Running the Project
 
