@@ -5,6 +5,10 @@
 
 A **privacy-first** advertising network that leverages **zero-knowledge proofs (ZKPs)** to enable targeted ads **without exposing user data**. Users retain complete control over their information while still receiving relevant advertisements and earning **USDC rewards** for engagement.
 
+## YouTube Video Presentation
+
+https://www.youtube.com/watch?v=5Fohh25Ta10
+
 ## Problem
 Traditional ad networks collect and broker vast amounts of user data, often leading to:
 - Privacy violations and mass surveillance.
