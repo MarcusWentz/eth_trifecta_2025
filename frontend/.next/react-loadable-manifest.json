@@ -437,6 +437,18 @@
       "static/chunks/_app-pages-browser_node_modules_rainbow-me_rainbowkit_dist_zora-YZH32HP3_js.js"
     ]
   },
+  "../node_modules/@safe-global/safe-apps-sdk/node_modules/viem/_esm/actions/public/call.js -> ../../utils/ccip.js": {
+    "id": "../node_modules/@safe-global/safe-apps-sdk/node_modules/viem/_esm/actions/public/call.js -> ../../utils/ccip.js",
+    "files": []
+  },
+  "../node_modules/@safe-global/safe-apps-sdk/node_modules/viem/_esm/utils/rpc/webSocket.js -> isows": {
+    "id": "../node_modules/@safe-global/safe-apps-sdk/node_modules/viem/_esm/utils/rpc/webSocket.js -> isows",
+    "files": []
+  },
+  "../node_modules/@safe-global/safe-apps-sdk/node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1": {
+    "id": "../node_modules/@safe-global/safe-apps-sdk/node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1",
+    "files": []
+  },
   "../node_modules/@wagmi/connectors/dist/esm/coinbaseWallet.js -> @coinbase/wallet-sdk": {
     "id": "../node_modules/@wagmi/connectors/dist/esm/coinbaseWallet.js -> @coinbase/wallet-sdk",
     "files": [
@@ -508,11 +520,5 @@
   "../node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1": {
     "id": "../node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1",
     "files": []
-  },
-  "app/dashboard/analytics/page.tsx -> recharts": {
-    "id": "app/dashboard/analytics/page.tsx -> recharts",
-    "files": [
-      "static/chunks/_app-pages-browser_node_modules_recharts_es6_index_js.js"
-    ]
   }
 }
