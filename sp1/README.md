@@ -26,6 +26,16 @@ sp1up
 cargo prove --version
 ```
 
+### SP1 Verification Program
+
+Defined in path
+
+```
+script/src/bin/main.rs
+```
+
+https://github.com/MarcusWentz/eth_trifecta_2025/blob/main/sp1/script/src/bin/main.rs
+
 ### Test Run SP1 Proof With Input JSON file
 
 ```shell
