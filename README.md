@@ -24,13 +24,12 @@ Key benefits include:
 
 
 ## Tech Stack
-- **SP1 zkVM & RISC Zero** – Used to create and verify **zero-knowledge proofs**.
+- **SP1 zkVM** – Used to create and verify **zero-knowledge proofs**.
 - **Rust Backend** – Handles verification and ad matching logic.
 - **React Frontend** – Displays ads to users and manages their interactions.
 
 
 ## Repository Structure
-- **[RISC Zero](https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/risc0)** – ZK proving system using RISC Zero.
 - **[SP1](https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/sp1)** – ZK proving system using SP1 zkVM.
 - **[Frontend](https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/frontend)** – User-facing React application.
 
@@ -41,12 +40,8 @@ This project aligns **advertising incentives with user privacy**, ensuring:
 - **Trustless Verification:** Advertisers can verify audience targeting **without seeing user data**.
 
 
-## RISC Zero
-
-https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/risc0
-
 ## SP1
-
+https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/sp1
 
 
 ## Frontend
