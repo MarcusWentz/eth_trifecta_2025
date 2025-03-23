@@ -1,21 +1,20 @@
-
-export const agentChain = ({
-    id: 1313161584,
-    name: 'The Agent Chain',
+export const sepoliaChain = {
+    id: 11155111,
+    name: 'Sepolia',
     nativeCurrency: {
         decimals: 18,
         name: 'Ether',
         symbol: 'ETH',
     },
     rpcUrls: {
-        default: { http: ['https://rpc-0x4e454170.aurora-cloud.dev'] },
+        default: { http: ['https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID'], wss: ['wss://ethereum-sepolia-rpc.publicnode.com'] },
     },
     blockExplorers: {
         default: {
-            name: 'Agent Chain Explorer',
-            url: 'https://explorer.0x4e454170.aurora-cloud.dev',
-            apiUrl: 'https://explorer.0x4e454170.aurora-cloud.dev/api',
+            name: 'Sepolia Explorer',
+            url: 'https://sepolia.etherscan.io',
+            apiUrl: 'https://api-sepolia.etherscan.io/api',
         },
     },
-    testnet: false,
-});
+    testnet: true,
+};

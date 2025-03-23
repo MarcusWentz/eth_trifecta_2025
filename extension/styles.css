@@ -1,0 +1,597 @@
+/* Base container styles */
+.sovereign-ads-container {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 9999;
+  position: relative;
+  border-radius: 12px;
+  overflow: visible;
+  margin-bottom: 16px;
+}
+
+/* Close button styles */
+.sovereign-close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+.sovereign-close-button::before,
+.sovereign-close-button::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  background: #666;
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+.sovereign-close-button::before {
+  transform: rotate(45deg);
+}
+
+.sovereign-close-button::after {
+  transform: rotate(-45deg);
+}
+
+.sovereign-close-button:hover::before,
+.sovereign-close-button:hover::after {
+  background: #FF3366;
+}
+
+.sovereign-ads-container:hover .sovereign-close-button {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Branding styles */
+.sovereign-branding {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.1);
+  white-space: nowrap;
+  z-index: 2;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+}
+
+.sovereign-branding-icon {
+  font-size: 14px;
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.sovereign-branding:hover {
+  transform: translateX(-50%) translateY(-2px);
+  opacity: 1;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Website Theme - Updated branding */
+.sovereign-ads-container[data-platform="website"] .sovereign-branding {
+  background: white;
+  color: #666;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-branding:hover {
+  color: #2196F3;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-branding-icon {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Video overlay branding */
+.sovereign-video-overlay .sovereign-branding {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  transform: none;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.sovereign-video-overlay .sovereign-branding:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.15);
+}
+
+.sovereign-video-overlay .sovereign-branding-icon {
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Website Theme - Lighter version */
+.sovereign-ads-container[data-platform="website"] {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 4px 16px rgba(149, 157, 165, 0.1);
+}
+
+.sovereign-ads-container[data-platform="website"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-ad-badge {
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+  font-size: 11px;
+  padding: 3px 10px;
+  opacity: 0.9;
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-ad-title {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 18px;
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-tag {
+  background: rgba(33, 150, 243, 0.08);
+  color: #1976D2;
+  border: 1px solid rgba(25, 118, 210, 0.2);
+  font-size: 11px;
+  padding: 2px 10px;
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-cta-button {
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+  font-size: 13px;
+  padding: 10px 20px;
+  opacity: 0.9;
+}
+
+.sovereign-ads-container[data-platform="website"] .sovereign-cta-button:hover {
+  opacity: 1;
+}
+
+/* YouTube Theme */
+.sovereign-ads-container[data-platform="youtube"] {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  color: white;
+}
+
+.sovereign-ads-container[data-platform="youtube"]:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(255, 51, 102, 0.3);
+}
+
+.sovereign-ads-container[data-platform="youtube"] .sovereign-ad-badge {
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+}
+
+/* Common styles */
+.sovereign-ad-content {
+  position: relative;
+  padding: 20px;
+}
+
+.sovereign-ad-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.sovereign-ad-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.sovereign-ad-description {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+}
+
+.sovereign-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sovereign-tag {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.sovereign-cta-button {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Settings Page Styles */
+.sovereign-settings {
+  width: 400px;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #333;
+}
+
+.sovereign-settings-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.sovereign-settings-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+}
+
+.sovereign-settings-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sovereign-settings-section {
+  margin-bottom: 24px;
+}
+
+.sovereign-settings-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.sovereign-toggle-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.sovereign-toggle-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sovereign-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+}
+
+.sovereign-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sovereign-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.sovereign-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .sovereign-toggle-slider {
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+}
+
+input:checked + .sovereign-toggle-slider:before {
+  transform: translateX(20px);
+}
+
+.sovereign-save-button {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 16px;
+}
+
+.sovereign-save-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
+}
+
+/* Video overlay styles */
+.sovereign-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26,26,26,0.95) 0%, rgba(45,45,45,0.95) 100%);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.sovereign-video-content {
+  width: 80%;
+  max-width: 800px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.sovereign-video-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.sovereign-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sovereign-logo {
+  font-size: 24px;
+}
+
+.sovereign-brand-text {
+  font-weight: 700;
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sovereign-timer {
+  background: rgba(255,255,255,0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.sovereign-video-main h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sovereign-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e0e0e0;
+  margin-bottom: 24px;
+}
+
+.sovereign-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #FF3366;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.sovereign-learn-more:hover {
+  color: #FF6B3D;
+}
+
+.sovereign-arrow {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+.sovereign-skip-button {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 24px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: not-allowed;
+  transition: all 0.2s ease;
+}
+
+.sovereign-skip-button.sovereign-skip-active {
+  background: linear-gradient(135deg, #FF3366 0%, #FF6B3D 100%);
+  border: none;
+  cursor: pointer;
+}
+
+.sovereign-skip-button.sovereign-skip-active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sovereign-video-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .sovereign-video-main h2 {
+    font-size: 24px;
+  }
+
+  .sovereign-description {
+    font-size: 14px;
+  }
+
+  .sovereign-skip-button {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 16px;
+  }
+}
+
+/* YouTube specific styles */
+.zkads-container[data-platform="youtube"] {
+  margin-bottom: 20px;
+}
+
+/* Website specific styles */
+.zkads-container[data-platform="website"] {
+  margin: 20px auto;
+}
+
+/* Video ad overlay styles */
+.zkads-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.zkads-video-overlay h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.zkads-video-overlay p {
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+.zkads-video-overlay a {
+  color: #2196F3;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.zkads-video-overlay a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .zkads-container {
+    max-width: 100% !important;
+    margin: 10px !important;
+  }
+  
+  .zkads-container[data-position="sidebar"] {
+    display: none; /* Hide sidebar ads on mobile */
+  }
+
+  .zkads-video-overlay h2 {
+    font-size: 20px;
+  }
+
+  .zkads-video-overlay p {
+    font-size: 14px;
+  }
+} 

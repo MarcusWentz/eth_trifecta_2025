@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sovereign Ads Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sovereign-settings">
+    <div class="sovereign-settings-header">
+      <div class="sovereign-settings-logo">⚡</div>
+      <h1 class="sovereign-settings-title">Sovereign Ads</h1>
+    </div>
+
+    <div class="sovereign-settings-section">
+      <h3>General Settings</h3>
+      <div class="sovereign-toggle-container">
+        <span class="sovereign-toggle-label">Enable Ads</span>
+        <label class="sovereign-toggle">
+          <input type="checkbox" id="adToggle" checked>
+          <span class="sovereign-toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="sovereign-settings-section">
+      <h3>Platform Settings</h3>
+      <div class="sovereign-toggle-container">
+        <span class="sovereign-toggle-label">YouTube Ads</span>
+        <label class="sovereign-toggle">
+          <input type="checkbox" id="youtubeToggle" checked>
+          <span class="sovereign-toggle-slider"></span>
+        </label>
+      </div>
+      <div class="sovereign-toggle-container">
+        <span class="sovereign-toggle-label">Website Ads</span>
+        <label class="sovereign-toggle">
+          <input type="checkbox" id="websiteToggle" checked>
+          <span class="sovereign-toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="sovereign-settings-section">
+      <h3>Ad Preferences</h3>
+      <div class="sovereign-toggle-container">
+        <span class="sovereign-toggle-label">Show Video Ads</span>
+        <label class="sovereign-toggle">
+          <input type="checkbox" id="videoAdsToggle" checked>
+          <span class="sovereign-toggle-slider"></span>
+        </label>
+      </div>
+      <div class="sovereign-toggle-container">
+        <span class="sovereign-toggle-label">Show Sidebar Ads</span>
+        <label class="sovereign-toggle">
+          <input type="checkbox" id="sidebarAdsToggle" checked>
+          <span class="sovereign-toggle-slider"></span>
+        </label>
+      </div>
+      <div class="sovereign-toggle-container">
+        <span class="sovereign-toggle-label">Show In-Content Ads</span>
+        <label class="sovereign-toggle">
+          <input type="checkbox" id="inContentAdsToggle" checked>
+          <span class="sovereign-toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <button id="saveSettings" class="sovereign-save-button">Save Settings</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 
