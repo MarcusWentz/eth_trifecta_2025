@@ -1,0 +1,1 @@
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/search_json: /Users/kenil/code/eth_trifecta_2025/backend/core/src/lib.rs /Users/kenil/code/eth_trifecta_2025/backend/methods/guest/src/main.rs

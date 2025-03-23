@@ -1,0 +1,10 @@
+/Users/kenil/code/eth_trifecta_2025/backend/target/debug/deps/libark_relations-351c62d3126cc72e.rmeta: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/mod.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/impl_lc.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/constraint_system.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/error.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/trace.rs
+
+/Users/kenil/code/eth_trifecta_2025/backend/target/debug/deps/ark_relations-351c62d3126cc72e.d: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/mod.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/impl_lc.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/constraint_system.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/error.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/trace.rs
+
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/lib.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/mod.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/impl_lc.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/constraint_system.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/error.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-relations-0.4.0/src/r1cs/trace.rs:

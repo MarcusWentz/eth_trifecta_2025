@@ -1,0 +1,11 @@
+cargo:rerun-if-env-changed=RISC0_SKIP_BUILD
+Building guest package json-methods.search_json
+cargo:rerun-if-env-changed=RISC0_SKIP_BUILD
+Using rustc: /Users/kenil/.rustup/toolchains/risc0/bin/rustc
+cargo:rerun-if-env-changed=RISC0_RUST_SRC
+Building guest package: cargo build --target riscv32im-risc0-zkvm-elf
+cargo:rerun-if-env-changed=RISC0_BUILD_DEBUG
+cargo:rerun-if-env-changed=RISC0_BUILD_DEBUG
+cargo:rerun-if-env-changed=RISC0_SKIP_BUILD
+cargo:rerun-if-env-changed=RISC0_SKIP_BUILD
+cargo:rerun-if-changed=/Users/kenil/code/eth_trifecta_2025/backend/target/debug/build/json-methods-60f07620db1066e8/out/methods.rs

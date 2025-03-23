@@ -2,7 +2,7 @@
 
 ## Overview
 
-Secure Data Advertisements
+SovereignAds
 
 ### Problem
 

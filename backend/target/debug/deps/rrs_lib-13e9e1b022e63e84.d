@@ -1,0 +1,10 @@
+/Users/kenil/code/eth_trifecta_2025/backend/target/debug/deps/librrs_lib-13e9e1b022e63e84.rmeta: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_executor.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_formats.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_string_outputter.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/memories.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/process_instruction.rs
+
+/Users/kenil/code/eth_trifecta_2025/backend/target/debug/deps/rrs_lib-13e9e1b022e63e84.d: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_executor.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_formats.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_string_outputter.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/memories.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/process_instruction.rs
+
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/lib.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_executor.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_formats.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/instruction_string_outputter.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/memories.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rrs-lib-0.1.0/src/process_instruction.rs:

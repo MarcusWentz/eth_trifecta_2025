@@ -1,0 +1,9 @@
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/deps/libark_crypto_primitives-35f68f250a68ca42.rmeta: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs
+
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/deps/libark_crypto_primitives-35f68f250a68ca42.rlib: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs
+
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/deps/ark_crypto_primitives-35f68f250a68ca42.d: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs
+
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs:

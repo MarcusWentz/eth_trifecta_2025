@@ -1,0 +1,10 @@
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/deps/libgetrandom-3142c38df2dc6967.rmeta: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/error.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/util.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/custom.rs
+
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/deps/libgetrandom-3142c38df2dc6967.rlib: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/error.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/util.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/custom.rs
+
+/Users/kenil/code/eth_trifecta_2025/backend/target/riscv-guest/json-methods/search_json/riscv32im-risc0-zkvm-elf/release/deps/getrandom-3142c38df2dc6967.d: /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/lib.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/error.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/util.rs /Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/custom.rs
+
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/lib.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/error.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/util.rs:
+/Users/kenil/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.15/src/custom.rs:
