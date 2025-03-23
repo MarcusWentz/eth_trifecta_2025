@@ -1,4 +1,4 @@
-// File: /Users/buddyharshal/Documents/zk-trifecta/eth_trifecta_2025/frontend/src/app/page.tsx
+// File: /Users/buddyharshal/Documents/eth_trifecta_2025/frontend/src/app/page.tsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

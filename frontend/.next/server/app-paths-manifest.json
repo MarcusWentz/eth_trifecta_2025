@@ -1,3 +1,12 @@
 {
-  "/page": "app/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/user-dashboard/rewards/page": "app/user-dashboard/rewards/page.js",
+  "/user-dashboard/interests/page": "app/user-dashboard/interests/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/create-ad/page": "app/dashboard/create-ad/page.js",
+  "/dashboard/analytics/page": "app/dashboard/analytics/page.js",
+  "/dashboard/manage-ads/page": "app/dashboard/manage-ads/page.js",
+  "/user-dashboard/history/page": "app/user-dashboard/history/page.js",
+  "/user-dashboard/wallets/page": "app/user-dashboard/wallets/page.js"
 }

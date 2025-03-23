@@ -24,7 +24,7 @@ const Navbar = () => {
 				{/* Logo */}
 				<Link href="/" className="flex items-center">
 					<div className="text-[28px] md:text-[32px] text-white font-serif">
-						Zkads
+						Sovereign Ads
 					</div>
 				</Link>
 
