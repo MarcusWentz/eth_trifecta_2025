@@ -1,4 +1,4 @@
-![112135134](https://github.com/user-attachments/assets/d6c1f991-e2a0-42e6-8bd1-a75856757e2a)# SovereignAds
+# SovereignAds
 
 ## Overview
 **Privacy-Preserving Ad Network Using ZKPs**
