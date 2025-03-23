@@ -33,11 +33,6 @@ Key benefits include:
 - **[SP1](https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/sp1)** – ZK proving system using SP1 zkVM.
 - **[Frontend](https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/frontend)** – User-facing React application.
 
-## Why It Matters
-This project aligns **advertising incentives with user privacy**, ensuring:
-- **Data Sovereignty:** Users never share raw personal data.
-- **Fair Rewards:** Users get paid in **USDC** for ad views.
-- **Trustless Verification:** Advertisers can verify audience targeting **without seeing user data**.
 
 
 ## SP1
