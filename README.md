@@ -24,13 +24,10 @@ Key benefits include:
 
 
 ## Tech Stack
-| Technology | Description |
-|------------|------------|
+- **SP1 zkVM & RISC Zero** – Used to create and verify **zero-knowledge proofs**.
+- **Rust Backend** – Handles verification and ad matching logic.
+- **React Frontend** – Displays ads to users and manages their interactions.
 
-| ![SP1](https://github.com/user-attachments/assets/fcfef3a9-0a28-4151-8e89-23f6f0ad3b30) **SP1 zkVM** | Zero-Knowledge Proof system for privacy-preserving verification |
-| ![Rust](https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg) **Rust** | Backend for verification and ad logic |
-| ![Next.js](https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg) **Next.js** | Frontend framework for seamless UI experience |
-.
 
 ## Repository Structure
 - **[RISC Zero](https://github.com/MarcusWentz/eth_trifecta_2025/tree/main/risc0)** – ZK proving system using RISC Zero.
