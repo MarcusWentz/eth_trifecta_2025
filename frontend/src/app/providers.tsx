@@ -27,20 +27,20 @@ import { sepoliaChain } from '@/lib/customChain';
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '9811958bd307518b364ff7178034c435';
 
 const config = getDefaultConfig({
-    appName: 'ZKads',
+    appName: 'Sovereign Ads',
     projectId: projectId,
     chains: [mainnet, polygon, optimism, arbitrum, sepoliaChain],
     ssr: true,
 });
 
 const { wallets } = getDefaultWallets({
-    appName: 'ZKads',
+    appName: 'Sovereign Ads',
     projectId,
 });
 
 const appInfo = {
-    appName: 'ZKads',
-    learnMoreUrl: 'https://zkads.io/about',
+    appName: 'Sovereign Ads',
+    learnMoreUrl: 'https://Sovereign Ads.io/about',
 };
 
 const queryClient = new QueryClient();

@@ -69,7 +69,7 @@ export default function UserDashboardLayout({
               <line x1="4" y1="18" x2="20" y2="18" />
             </svg>
           </Button>
-          <span className="font-semibold">ZKads User Dashboard</span>
+          <span className="font-semibold">Sovereign Ads User Dashboard</span>
         </div>
 
         {/* Main Content */}

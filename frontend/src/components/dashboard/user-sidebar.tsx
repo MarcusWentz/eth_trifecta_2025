@@ -23,10 +23,24 @@ import { Badge } from "@/components/ui/badge"
 
 interface UserSidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+interface NavigationItem {
+  name: string
+  href: string
+  icon: React.ElementType
+  current: boolean
+  badge?: string
+}
+
+interface Navigation {
+  main: NavigationItem[]
+  preferences: NavigationItem[]
+  profile: NavigationItem[]
+}
+
 export function UserSidebar({ className, ...props }: UserSidebarProps) {
   const pathname = usePathname()
 
-  const navigation = {
+  const navigation: Navigation = {
     main: [
       {
         name: "Overview",
@@ -78,7 +92,7 @@ export function UserSidebar({ className, ...props }: UserSidebarProps) {
         <Sparkles className="mr-2 h-6 w-6 text-indigo-500" />
         <Link href="/" className="flex items-center">
           <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            ZKads
+            Sovereign Ads
           </span>
           <Badge variant="outline" className="ml-2 text-xs font-normal">User</Badge>
         </Link>

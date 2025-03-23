@@ -79,7 +79,7 @@ export default function WalletsPage() {
       type: "Reward",
       amount: "2.50",
       date: "2023-05-15T16:45:00",
-      from: "ZKads",
+      from: "Sovereign Ads",
       to: address?.slice(0, 6) + "..." + address?.slice(-4),
       status: "Confirmed",
       hash: "0x12l13m14n15o...",
@@ -99,7 +99,7 @@ export default function WalletsPage() {
       type: "Reward",
       amount: "1.75",
       date: "2023-05-05T11:20:00",
-      from: "ZKads",
+      from: "Sovereign Ads",
       to: address?.slice(0, 6) + "..." + address?.slice(-4),
       status: "Confirmed",
       hash: "0x20t21u22v23w...",
@@ -490,7 +490,7 @@ export default function WalletsPage() {
             <CardHeader>
               <CardTitle>Wallet Settings</CardTitle>
               <CardDescription>
-                Configure how your wallet integrates with ZKads
+                Configure how your wallet integrates with Sovereign Ads
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6">

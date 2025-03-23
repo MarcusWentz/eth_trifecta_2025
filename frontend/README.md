@@ -1,7 +1,7 @@
-# ZKads Frontend 🚀
+# Sovereign Ads Frontend 🚀
 
 ## Overview
-ZKads is a revolutionary decentralized advertising platform leveraging zero-knowledge proofs for privacy-preserving ad targeting and verification. This frontend provides a modern, user-friendly interface for advertisers and publishers to interact with the ZKads ecosystem.
+Sovereign Ads is a revolutionary decentralized advertising platform leveraging zero-knowledge proofs for privacy-preserving ad targeting and verification. This frontend provides a modern, user-friendly interface for advertisers and publishers to interact with the Sovereign Ads ecosystem.
 
 ## 🛠 Tech Stack
 - Next.js 14

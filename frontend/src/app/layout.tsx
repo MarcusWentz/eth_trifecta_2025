@@ -9,7 +9,7 @@ import { Providers } from "@/app/providers"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ZKads - Privacy-First Advertising with Zero-Knowledge Proofs",
+  title: "Sovereign Ads - Privacy-First Advertising with Zero-Knowledge Proofs",
   description: "Engage with privacy-preserving advertisements powered by zero-knowledge proof technology. Earn rewards for your attention while maintaining complete privacy.",
 }
 

@@ -14,28 +14,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   Wallet,
   LogOut,
-  User,
   Settings,
   ChevronDown,
-  Bell,
   Menu,
   X,
   Sparkles,
-  BookOpen,
-  Users,
   HelpCircle,
+  Gift,
+  MegaphoneIcon,
+  ArrowRight
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -78,410 +69,356 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className={cn(
-                "font-bold text-xl transition-colors",
-                isDashboard ? "text-white" : "text-white"
-              )}>
-                ZK<span className="text-indigo-400">ads</span>
+              <Sparkles className="h-5 w-5 mr-2 text-indigo-400" />
+              <span className="font-bold text-xl">
+                Sovereign<span className="text-indigo-400">ads</span>
               </span>
               {isDashboard && (
                 <Badge 
                   variant="outline" 
                   className="ml-2 font-normal text-xs bg-slate-800/60 border-slate-700 text-slate-300"
                 >
-                  {isUserDashboard ? "User Portal" : "Advertiser Portal"}
+                  {isUserDashboard ? "User" : "Advertiser"}
                 </Badge>
               )}
             </Link>
 
-            <nav className="hidden md:ml-10 md:flex md:items-center md:space-x-4">
-              {!isDashboard && (
-                <NavigationMenu>
-                  <NavigationMenuList>
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger 
-                        className={cn(
-                          "bg-transparent hover:bg-slate-800/50",
-                          pathname === "/" ? "text-indigo-400" : "text-white"
-                        )}
-                      >
-                        Platform
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
-                          <li className="row-span-3">
-                            <NavigationMenuLink asChild>
-                              <a
-                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-indigo-500/20 to-purple-500/20 border border-slate-800 p-6 no-underline outline-none focus:shadow-md"
-                                href="/features"
-                              >
-                                <Sparkles className="h-6 w-6 text-indigo-400 mb-2" />
-                                <div className="mb-2 mt-2 text-lg font-medium text-white">
-                                  ZKads Platform
-                                </div>
-                                <p className="text-sm leading-tight text-slate-300">
-                                  Engaging ads with privacy-first technology using zero-knowledge proofs
-                                </p>
-                              </a>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <Link href="/for-users" legacyBehavior passHref>
-                              <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-800/50 hover:text-indigo-400">
-                                <div className="text-sm font-medium">For Users</div>
-                                <p className="line-clamp-2 text-sm leading-snug text-slate-400">
-                                  Earn tokens for viewing ads with complete privacy
-                                </p>
-                              </NavigationMenuLink>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/for-advertisers" legacyBehavior passHref>
-                              <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-800/50 hover:text-indigo-400">
-                                <div className="text-sm font-medium">For Advertisers</div>
-                                <p className="line-clamp-2 text-sm leading-snug text-slate-400">
-                                  Create effective campaigns with verifiable engagement
-                                </p>
-                              </NavigationMenuLink>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/technology" legacyBehavior passHref>
-                              <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-800/50 hover:text-indigo-400">
-                                <div className="text-sm font-medium">Technology</div>
-                                <p className="line-clamp-2 text-sm leading-snug text-slate-400">
-                                  Learn how our zero-knowledge proofs protect user privacy
-                                </p>
-                              </NavigationMenuLink>
-                            </Link>
-                          </li>
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                      <Link href="/pricing" legacyBehavior passHref>
-                        <NavigationMenuLink className={cn(
-                          "block select-none px-4 py-2 text-sm font-medium rounded-md transition-colors",
-                          pathname === "/pricing" 
-                            ? "text-indigo-400" 
-                            : "text-white hover:bg-slate-800/50 hover:text-indigo-400"
-                        )}>
-                          Pricing
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                      <Link href="/docs" legacyBehavior passHref>
-                        <NavigationMenuLink className={cn(
-                          "block select-none px-4 py-2 text-sm font-medium rounded-md transition-colors",
-                          pathname === "/docs" 
-                            ? "text-indigo-400" 
-                            : "text-white hover:bg-slate-800/50 hover:text-indigo-400"
-                        )}>
-                          Docs
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
-              )}
+            {/* Desktop Nav Links - Only show a simplified version with two main paths */}
+            {!isDashboard && (
+              <nav className="hidden md:flex md:ml-6 md:gap-1">
+                <Link href="/user-dashboard">
+                  <Button 
+                    variant="ghost" 
+                    className="group flex items-center gap-1.5 px-3 text-sm rounded-lg text-slate-200 hover:bg-blue-600/10 hover:text-blue-400"
+                  >
+                    <Gift className="h-4 w-4 text-blue-400 group-hover:scale-110 transition-transform" />
+                    For Users
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button 
+                    variant="ghost" 
+                    className="group flex items-center gap-1.5 px-3 text-sm rounded-lg text-slate-200 hover:bg-purple-600/10 hover:text-purple-400"
+                  >
+                    <MegaphoneIcon className="h-4 w-4 text-purple-400 group-hover:scale-110 transition-transform" />
+                    For Advertisers
+                  </Button>
+                </Link>
+              </nav>
+            )}
 
-              {isDashboard && (
-                <div className="flex items-center space-x-1">
-                  {isUserDashboard ? (
+            {/* Dashboard Nav */}
+            {isDashboard && (
+              <div className="hidden md:flex md:ml-6 md:items-center">
+                {isUserDashboard ? (
+                  <nav className="flex space-x-1">
+                    <Link href="/user-dashboard">
+                      <Button variant="ghost" size="sm" className={cn(
+                        pathname === "/user-dashboard" 
+                          ? "bg-slate-800/50 text-indigo-400 border-b-2 border-indigo-400 rounded-none" 
+                          : "hover:bg-slate-800/30 rounded-lg"
+                      )}>
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <Link href="/user-dashboard/rewards">
+                      <Button variant="ghost" size="sm" className={cn(
+                        pathname === "/user-dashboard/rewards" 
+                          ? "bg-slate-800/50 text-indigo-400 border-b-2 border-indigo-400 rounded-none" 
+                          : "hover:bg-slate-800/30 rounded-lg"
+                      )}>
+                        Rewards
+                      </Button>
+                    </Link>
+                    <Link href="/user-dashboard/history">
+                      <Button variant="ghost" size="sm" className={cn(
+                        pathname === "/user-dashboard/history" 
+                          ? "bg-slate-800/50 text-indigo-400 border-b-2 border-indigo-400 rounded-none" 
+                          : "hover:bg-slate-800/30 rounded-lg"
+                      )}>
+                        History
+                      </Button>
+                    </Link>
+                  </nav>
+                ) : (
+                  <nav className="flex space-x-1">
+                    <Link href="/dashboard">
+                      <Button variant="ghost" size="sm" className={cn(
+                        pathname === "/dashboard" 
+                          ? "bg-slate-800/50 text-indigo-400 border-b-2 border-indigo-400 rounded-none" 
+                          : "hover:bg-slate-800/30 rounded-lg"
+                      )}>
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <Link href="/dashboard/create-ad">
+                      <Button variant="ghost" size="sm" className={cn(
+                        pathname === "/dashboard/create-ad" 
+                          ? "bg-slate-800/50 text-indigo-400 border-b-2 border-indigo-400 rounded-none" 
+                          : "hover:bg-slate-800/30 rounded-lg"
+                      )}>
+                        Create Ad
+                      </Button>
+                    </Link>
+                    <Link href="/dashboard/analytics">
+                      <Button variant="ghost" size="sm" className={cn(
+                        pathname === "/dashboard/analytics" 
+                          ? "bg-slate-800/50 text-indigo-400 border-b-2 border-indigo-400 rounded-none" 
+                          : "hover:bg-slate-800/30 rounded-lg"
+                      )}>
+                        Analytics
+                      </Button>
+                    </Link>
+                  </nav>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-3">
+            {/* For Homepage: Show simplified dashboard links on larger screens */}
+            {!isDashboard && !isConnected && (
+              <div className="hidden md:flex md:items-center md:gap-3">
+                <Link href="/user-dashboard">
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 group"
+                  >
+                    User Dashboard
+                    <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button 
+                    size="sm"
+                    variant="outline" 
+                    className="border-purple-600/30 text-purple-400 hover:bg-purple-600/10"
+                  >
+                    Advertiser Dashboard
+                  </Button>
+                </Link>
+              </div>
+            )}
+
+            {/* Wallet Connection */}
+            {isConnected ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="flex items-center gap-2 pl-2 pr-1 rounded-full bg-slate-800/60 hover:bg-slate-800 border border-slate-700"
+                  >
+                    <Avatar className="h-6 w-6 bg-gradient-to-br from-indigo-500 to-purple-600">
+                      <AvatarFallback className="text-xs">
+                        {address ? address.slice(0, 2) : "ZK"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium max-md:hidden">
+                      {formatWalletAddress(address)}
+                    </span>
+                    <ChevronDown className="h-4 w-4 text-slate-400" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 bg-slate-950 border-slate-800">
+                  <DropdownMenuLabel className="flex flex-col gap-1">
+                    <span>Connected Wallet</span>
+                    <span className="text-xs font-normal text-slate-400">
+                      {formatWalletAddress(address)}
+                    </span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-slate-800" />
+                  
+                  {isUserDashboard && (
                     <>
-                      <Link href="/user-dashboard" passHref>
-                        <Button variant="ghost" className={cn(
-                          "text-sm h-8 px-3",
-                          pathname === "/user-dashboard" ? "bg-slate-800/80 text-indigo-400" : "hover:bg-slate-800/50"
-                        )}>
-                          Dashboard
-                        </Button>
+                      <Link href="/user-dashboard">
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Gift className="mr-2 h-4 w-4 text-blue-400" />
+                          <span>Dashboard</span>
+                        </DropdownMenuItem>
                       </Link>
-                      <Link href="/user-dashboard/rewards" passHref>
-                        <Button variant="ghost" className={cn(
-                          "text-sm h-8 px-3",
-                          pathname === "/user-dashboard/rewards" ? "bg-slate-800/80 text-indigo-400" : "hover:bg-slate-800/50"
-                        )}>
-                          Rewards
-                        </Button>
-                      </Link>
-                      <Link href="/user-dashboard/history" passHref>
-                        <Button variant="ghost" className={cn(
-                          "text-sm h-8 px-3",
-                          pathname === "/user-dashboard/history" ? "bg-slate-800/80 text-indigo-400" : "hover:bg-slate-800/50"
-                        )}>
-                          History
-                        </Button>
-                      </Link>
-                    </>
-                  ) : (
-                    <>
-                      <Link href="/dashboard" passHref>
-                        <Button variant="ghost" className={cn(
-                          "text-sm h-8 px-3",
-                          pathname === "/dashboard" ? "bg-slate-800/80 text-indigo-400" : "hover:bg-slate-800/50"
-                        )}>
-                          Dashboard
-                        </Button>
-                      </Link>
-                      <Link href="/dashboard/campaigns" passHref>
-                        <Button variant="ghost" className={cn(
-                          "text-sm h-8 px-3",
-                          pathname === "/dashboard/campaigns" ? "bg-slate-800/80 text-indigo-400" : "hover:bg-slate-800/50"
-                        )}>
-                          Campaigns
-                        </Button>
-                      </Link>
-                      <Link href="/dashboard/analytics" passHref>
-                        <Button variant="ghost" className={cn(
-                          "text-sm h-8 px-3",
-                          pathname === "/dashboard/analytics" ? "bg-slate-800/80 text-indigo-400" : "hover:bg-slate-800/50"
-                        )}>
-                          Analytics
-                        </Button>
+                      
+                      <Link href="/user-dashboard/rewards">
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Sparkles className="mr-2 h-4 w-4 text-yellow-400" />
+                          <span>Rewards</span>
+                        </DropdownMenuItem>
                       </Link>
                     </>
                   )}
-                </div>
-              )}
-            </nav>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            {isConnected ? (
-              <>
-                {isDashboard && (
-                  <Button variant="ghost" size="icon" className="relative h-8 w-8 mr-2 rounded-full bg-slate-800/50">
-                    <Bell className="h-4 w-4" />
-                    <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-indigo-500" />
-                  </Button>
-                )}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className={cn(
-                        "flex items-center gap-2 pl-2 pr-1 rounded-full border",
-                        isDashboard 
-                          ? "bg-slate-800/50 hover:bg-slate-800 border-slate-700" 
-                          : "bg-slate-900/70 hover:bg-slate-900/90 border-slate-800"
-                      )}
-                    >
-                      <Avatar className="h-7 w-7 bg-gradient-to-br from-indigo-500 to-purple-600">
-                        <AvatarFallback className="text-xs">
-                          {address ? address.slice(0, 2) : "ZK"}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm font-medium max-md:hidden">
-                        {formatWalletAddress(address)}
-                      </span>
-                      <ChevronDown className="h-4 w-4 text-slate-400" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 bg-slate-950 border-slate-800">
-                    <DropdownMenuLabel className="flex flex-col gap-1">
-                      <span>Connected Wallet</span>
-                      <span className="text-xs font-normal text-slate-400">
-                        {formatWalletAddress(address)}
-                      </span>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator className="bg-slate-800" />
-                    
-                    {isUserDashboard ? (
-                      <>
-                        <Link href="/user-dashboard/wallets">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Wallet className="mr-2 h-4 w-4" />
-                            <span>Manage Wallets</span>
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link href="/user-dashboard/rewards">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Sparkles className="mr-2 h-4 w-4" />
-                            <span>Rewards</span>
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link href="/user-dashboard/interests">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Settings className="mr-2 h-4 w-4" />
-                            <span>Ad Preferences</span>
-                          </DropdownMenuItem>
-                        </Link>
-                      </>
-                    ) : isAdvertiserDashboard ? (
-                      <>
-                        <Link href="/dashboard/campaigns">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Users className="mr-2 h-4 w-4" />
-                            <span>My Campaigns</span>
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link href="/dashboard/settings">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Settings className="mr-2 h-4 w-4" />
-                            <span>Account Settings</span>
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link href="/dashboard/billing">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Wallet className="mr-2 h-4 w-4" />
-                            <span>Billing</span>
-                          </DropdownMenuItem>
-                        </Link>
-                      </>
-                    ) : null}
-                    
-                    <DropdownMenuSeparator className="bg-slate-800" />
-                    
-                    <Link href="/help">
-                      <DropdownMenuItem className="cursor-pointer">
-                        <HelpCircle className="mr-2 h-4 w-4" />
-                        <span>Help & Support</span>
-                      </DropdownMenuItem>
-                    </Link>
-                    
-                    <DropdownMenuItem 
-                      onClick={() => disconnect()}
-                      className="cursor-pointer text-red-500 focus:text-red-500"
-                    >
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Disconnect</span>
+                  
+                  {isAdvertiserDashboard && (
+                    <>
+                      <Link href="/dashboard">
+                        <DropdownMenuItem className="cursor-pointer">
+                          <MegaphoneIcon className="mr-2 h-4 w-4 text-purple-400" />
+                          <span>Dashboard</span>
+                        </DropdownMenuItem>
+                      </Link>
+                      
+                      <Link href="/dashboard/create-ad">
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Gift className="mr-2 h-4 w-4 text-green-400" />
+                          <span>Create Ad</span>
+                        </DropdownMenuItem>
+                      </Link>
+                    </>
+                  )}
+                  
+                  {/* Show both dashboard options if on homepage */}
+                  {!isDashboard && (
+                    <>
+                      <Link href="/user-dashboard">
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Gift className="mr-2 h-4 w-4 text-blue-400" />
+                          <span>User Dashboard</span>
+                        </DropdownMenuItem>
+                      </Link>
+                      
+                      <Link href="/dashboard">
+                        <DropdownMenuItem className="cursor-pointer">
+                          <MegaphoneIcon className="mr-2 h-4 w-4 text-purple-400" />
+                          <span>Advertiser Dashboard</span>
+                        </DropdownMenuItem>
+                      </Link>
+                      
+                      <DropdownMenuSeparator className="bg-slate-800" />
+                    </>
+                  )}
+                  
+                  <Link href={isDashboard ? `${isUserDashboard ? "/user-dashboard" : "/dashboard"}/settings` : "/settings"}>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
+                  </Link>
+                  
+                  <Link href="/help">
+                    <DropdownMenuItem className="cursor-pointer">
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      <span>Help & Support</span>
+                    </DropdownMenuItem>
+                  </Link>
+                  
+                  <DropdownMenuSeparator className="bg-slate-800" />
+                  
+                  <DropdownMenuItem 
+                    onClick={() => disconnect()}
+                    className="cursor-pointer text-red-500 focus:text-red-500"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Disconnect</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
-              <>
-                {!isDashboard && (
-                  <NavigationMenu className="hidden md:block">
-                    <NavigationMenuList>
-                      <NavigationMenuItem>
-                        <Link href="/user-dashboard" legacyBehavior passHref>
-                          <NavigationMenuLink className="inline-flex h-9 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-slate-800/50 hover:text-indigo-400">
-                            For Users
-                          </NavigationMenuLink>
-                        </Link>
-                      </NavigationMenuItem>
-                      <NavigationMenuItem>
-                        <Link href="/dashboard" legacyBehavior passHref>
-                          <NavigationMenuLink className="inline-flex h-9 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-slate-800/50 hover:text-indigo-400">
-                            For Advertisers
-                          </NavigationMenuLink>
-                        </Link>
-                      </NavigationMenuItem>
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                )}
-                
-                <ConnectButton />
-              </>
+              <ConnectButton label="Connect" />
             )}
             
+            {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
               size="icon"
               className="md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
       </div>
       
-      {/* Mobile menu */}
+      {/* Mobile Menu - Simplified */}
       {mobileMenuOpen && (
-        <div className="md:hidden">
-          <div className={cn(
-            "px-4 py-5 border-t space-y-5",
-            isDashboard 
-              ? "bg-slate-950/95 border-slate-800" 
-              : "bg-slate-900/95 border-slate-800/50"
-          )}>
+        <div className="md:hidden border-t border-slate-800 bg-slate-950/95 backdrop-blur-md">
+          <div className="py-3 px-4">
             {!isDashboard ? (
               <>
-                <div className="space-y-3">
-                  <h3 className="text-sm font-medium text-slate-400">Platform</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link href="/for-users" className="block text-sm py-2">
-                      For Users
-                    </Link>
-                    <Link href="/for-advertisers" className="block text-sm py-2">
-                      For Advertisers
-                    </Link>
-                    <Link href="/technology" className="block text-sm py-2">
-                      Technology
-                    </Link>
-                    <Link href="/pricing" className="block text-sm py-2">
-                      Pricing
-                    </Link>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <h3 className="text-sm font-medium text-slate-400">Resources</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link href="/docs" className="block text-sm py-2">
-                      Documentation
-                    </Link>
-                    <Link href="/help" className="block text-sm py-2">
-                      Help & Support
-                    </Link>
-                    <Link href="/blog" className="block text-sm py-2">
-                      Blog
-                    </Link>
-                    <Link href="/faq" className="block text-sm py-2">
-                      FAQ
-                    </Link>
-                  </div>
-                </div>
-                <div className="pt-4 flex gap-3">
-                  <Link href="/user-dashboard" className="flex-1">
-                    <Button variant="outline" className="w-full border-slate-700 text-sm">
-                      User Dashboard
-                    </Button>
+                <div className="grid grid-cols-1 gap-1 mb-3">
+                  <Link 
+                    href="/user-dashboard" 
+                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-gradient-to-r from-blue-600/20 to-blue-800/20 border border-blue-600/30 text-blue-200"
+                  >
+                    <Gift className="h-5 w-5 text-blue-400" />
+                    <div>
+                      <div className="font-medium">User Dashboard</div>
+                      <div className="text-xs text-blue-300/80">View rewards & ad history</div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 ml-auto text-blue-400" />
                   </Link>
-                  <Link href="/dashboard" className="flex-1">
-                    <Button variant="outline" className="w-full border-slate-700 text-sm">
-                      Advertiser Dashboard
-                    </Button>
+                  
+                  <Link 
+                    href="/dashboard" 
+                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-gradient-to-r from-purple-600/20 to-purple-800/20 border border-purple-600/30 text-purple-200"
+                  >
+                    <MegaphoneIcon className="h-5 w-5 text-purple-400" />
+                    <div>
+                      <div className="font-medium">Advertiser Dashboard</div>
+                      <div className="text-xs text-purple-300/80">Create & manage campaigns</div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 ml-auto text-purple-400" />
                   </Link>
                 </div>
               </>
             ) : isUserDashboard ? (
-              <div className="space-y-1">
-                <Link href="/user-dashboard" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Dashboard
+              <div className="grid grid-cols-2 gap-1">
+                <Link href="/user-dashboard" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/user-dashboard" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <Gift className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Dashboard</span>
                 </Link>
-                <Link href="/user-dashboard/rewards" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Rewards
+                <Link href="/user-dashboard/rewards" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/user-dashboard/rewards" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <Sparkles className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Rewards</span>
                 </Link>
-                <Link href="/user-dashboard/history" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Ad History
+                <Link href="/user-dashboard/history" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/user-dashboard/history" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <HelpCircle className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Ad History</span>
                 </Link>
-                <Link href="/user-dashboard/wallets" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Wallet Management
-                </Link>
-                <Link href="/user-dashboard/interests" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Ad Preferences
+                <Link href="/user-dashboard/wallets" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/user-dashboard/wallets" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <Wallet className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Wallets</span>
                 </Link>
               </div>
             ) : (
-              <div className="space-y-1">
-                <Link href="/dashboard" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Dashboard
+              <div className="grid grid-cols-2 gap-1">
+                <Link href="/dashboard" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/dashboard" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <MegaphoneIcon className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Dashboard</span>
                 </Link>
-                <Link href="/dashboard/campaigns" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Campaigns
+                <Link href="/dashboard/create-ad" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/dashboard/create-ad" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <Gift className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Create Ad</span>
                 </Link>
-                <Link href="/dashboard/analytics" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Analytics
+                <Link href="/dashboard/manage-ads" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/dashboard/manage-ads" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <Settings className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Manage Ads</span>
                 </Link>
-                <Link href="/dashboard/create" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Create Ad
-                </Link>
-                <Link href="/dashboard/settings" className="block py-2 px-3 rounded-md hover:bg-slate-800/50">
-                  Settings
+                <Link href="/dashboard/analytics" className={cn(
+                  "flex flex-col items-center p-2 rounded-md text-center",
+                  pathname === "/dashboard/analytics" ? "bg-slate-800/60 text-white" : "text-slate-300"
+                )}>
+                  <HelpCircle className="h-5 w-5 mb-1" />
+                  <span className="text-sm">Analytics</span>
                 </Link>
               </div>
             )}

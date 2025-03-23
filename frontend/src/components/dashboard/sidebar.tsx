@@ -75,7 +75,7 @@ export function DashboardSidebar() {
         <div className="flex items-center gap-2">
           <Sparkles className="h-8 w-8 text-blue-400" />
           <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
-            ZKads
+            Sovereign Ads
           </h2>
         </div>
         <p className="text-sm text-slate-400 mt-1">Privacy-preserving advertising</p>

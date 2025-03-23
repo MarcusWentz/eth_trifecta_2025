@@ -104,7 +104,7 @@ export default function RewardsPage() {
     { 
       id: "150",
       name: "Premium NFT",
-      description: "150 ZKT for an exclusive ZKads NFT collectible",
+      description: "150 ZKT for an exclusive Sovereign Ads NFT collectible",
       category: "NFT",
       points: 150,
       image: "nft",

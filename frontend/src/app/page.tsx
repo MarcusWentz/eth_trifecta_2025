@@ -5,7 +5,6 @@ import { useAccount } from "wagmi"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { 
   LockKeyhole, 
   LineChart, 
@@ -14,469 +13,330 @@ import {
   Gift, 
   MegaphoneIcon, 
   ChevronRight,
-  CheckCircle2
+  CheckCircle2,
+  MousePointer,
+  ArrowRight,
+  Globe,
+  Zap,
+  Eye
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   const { isConnected, address } = useAccount()
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
-  const [userType, setUserType] = useState<'advertiser' | 'user' | null>(null)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const redirectToDashboard = () => {
-    if (isConnected) {
-      if (userType === 'advertiser') {
-        router.push('/dashboard')
-      } else if (userType === 'user') {
-        router.push('/user-dashboard')
-      }
-    }
-  }
-
   return (
-    <main className="flex flex-col min-h-screen">
-      {/* Hero Section with Video Background */}
-      <section className="w-full h-screen relative flex flex-col items-center justify-center overflow-hidden">
-        {/* Video Background with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/80 to-slate-950/90 z-10"></div>
+    <main className="flex flex-col min-h-screen overflow-hidden">
+      {/* Hero Section with 3D gradient bg */}
+      <section className="relative min-h-[90vh] flex items-center justify-center">
+        {/* Animated background gradients */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full filter blur-[80px] animate-float"></div>
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full filter blur-[80px] animate-float-delay"></div>
+          <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-indigo-500/10 rounded-full filter blur-[60px] animate-float-slow"></div>
+          <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[100px]"></div>
         </div>
 
-        <div className="container mx-auto text-center z-30 px-6 relative">
-          <div className="mb-6 inline-flex items-center gap-2 bg-slate-800/50 px-3 py-1 rounded-full border border-slate-700">
-            <Sparkles className="h-4 w-4 text-yellow-400" />
-            <span className="text-sm text-slate-300">Privacy-First Advertising with Zero-Knowledge Proofs</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
-            ZKads: Beyond Privacy
-          </h1>
-          
-          <h2 className="text-xl md:text-2xl text-slate-300 mb-10 max-w-3xl mx-auto">
-            The first blockchain platform that rewards users for viewing ads while preserving privacy through zero-knowledge proofs
-          </h2>
-          
-          <Tabs 
-            defaultValue="user" 
-            className="w-full max-w-3xl mx-auto"
-            onValueChange={(value) => setUserType(value as 'advertiser' | 'user')}
-          >
-            <TabsList className="grid w-full grid-cols-2 mb-8 bg-gradient-to-b from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
-              <TabsTrigger 
-                value="user" 
-                className="relative overflow-hidden data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-blue-800 data-[state=active]:text-white data-[state=active]:shadow-lg py-6 px-8 text-lg font-semibold transition-all duration-300 hover:bg-slate-800/30 group"
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <Gift className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  <span className="relative z-10">For Users</span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </TabsTrigger>
-              <TabsTrigger 
-                value="advertiser" 
-                className="relative overflow-hidden data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-purple-800 data-[state=active]:text-white data-[state=active]:shadow-lg py-6 px-8 text-lg font-semibold transition-all duration-300 hover:bg-slate-800/30 group"
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <MegaphoneIcon className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  <span className="relative z-10">For Advertisers</span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="user" className="transform transition-all duration-300 ease-in-out">
-              <div className="p-8 bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-800 shadow-xl hover:shadow-blue-900/20 transition-shadow">
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-4 bg-blue-500/10 rounded-full mb-6">
-                    <Gift className="h-12 w-12 text-blue-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Get Rewarded for Your Attention</h3>
-                  <p className="text-slate-300 mb-8 max-w-lg">
-                    View relevant ads while browsing, earn tokens, and maintain complete privacy over your data
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    {mounted && !isConnected ? (
-                      <div className="w-full">
-                        <ConnectButton label="Connect Wallet" />
-                      </div>
-                    ) : (
-                      <Button 
-                        onClick={redirectToDashboard}
-                        className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 shadow-lg hover:shadow-blue-900/20 transition-all duration-300"
-                        size="lg"
-                      >
-                        Enter User Dashboard
-                        <ChevronRight className="ml-2 h-5 w-5 animate-pulse" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="advertiser" className="transform transition-all duration-300 ease-in-out">
-              <div className="p-8 bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-800 shadow-xl hover:shadow-purple-900/20 transition-shadow">
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-4 bg-purple-500/10 rounded-full mb-6">
-                    <LineChart className="h-12 w-12 text-purple-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">Target Audiences, Not Individuals</h3>
-                  <p className="text-slate-300 mb-8 max-w-lg">
-                    Create targeted campaigns that respect user privacy through zero-knowledge verification
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    {mounted && !isConnected ? (
-                      <div className="w-full">
-                        <ConnectButton label="Connect Wallet" />
-                      </div>
-                    ) : (
-                      <Button 
-                        onClick={redirectToDashboard}
-                        className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 shadow-lg hover:shadow-purple-900/20 transition-all duration-300"
-                        size="lg"
-                      >
-                        Enter Advertiser Dashboard
-                        <ChevronRight className="ml-2 h-5 w-5 animate-pulse" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-          
-          <div className="flex justify-center animate-bounce mt-12">
-            <ChevronRight className="h-6 w-6 text-slate-400 rotate-90" />
-          </div>
-        </div>
-      </section>
-      {/* How It Works Section */}
-      <section className="w-full py-20 bg-slate-950">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              How Sovereign Ads Works
-            </h2>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-              Privacy-preserving advertising that benefits both users and advertisers
+        <div className="container mx-auto z-10 px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-8">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 mb-4">
+              <Sparkles className="h-3 w-3" />
+              Privacy-First Web3 Advertising
+            </span>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-gradient bg-gradient-to-r from-white via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              Ads That Respect Your Privacy
+            </h1>
+            <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
+              The future of advertising where users earn rewards without sacrificing privacy
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
-            {/* For Users */}
-            <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-8">
-              <div className="flex items-center mb-6">
-                <div className="h-12 w-12 rounded-full bg-blue-900/50 flex items-center justify-center text-blue-400 mr-4">
-                  <Gift className="h-6 w-6" />
-                </div>
-                <h3 className="text-2xl font-bold">For Users</h3>
-              </div>
+
+          {/* User/Advertiser Cards */}
+          <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+            {/* User Card */}
+            <div className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:border-blue-500/20 hover:-translate-y-1">
+              <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-gradient-to-br from-blue-500/20 to-blue-600/30 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-blue-500/30 group-hover:to-blue-600/40"></div>
               
-              <div className="space-y-6">
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center">
-                      <span className="text-blue-400 font-bold">1</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Install Extension</h4>
-                    <p className="text-slate-400">Download the ZKads browser extension to get started</p>
-                  </div>
+              <div className="relative">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400">
+                  <Eye className="h-6 w-6" />
                 </div>
+                <h3 className="mb-2 text-2xl font-bold text-white">For Users</h3>
+                <p className="mb-6 text-slate-300">Get paid for your attention while keeping your data private</p>
                 
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center">
-                      <span className="text-blue-400 font-bold">2</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Set Your Preferences</h4>
-                    <p className="text-slate-400">Choose interests that match your preferences for more relevant ads</p>
-                  </div>
-                </div>
+                <ul className="mb-8 space-y-2">
+                  {['Earn tokens for viewing ads', 'Complete privacy with zero-knowledge proofs', 'Choose ad categories you want to see'].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-slate-300">
+                      <CheckCircle2 className="h-4 w-4 text-blue-400" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
                 
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center">
-                      <span className="text-blue-400 font-bold">3</span>
-                    </div>
+                {mounted && !isConnected ? (
+                  <div className="w-full mb-2">
+                    <ConnectButton label="Connect Wallet" />
                   </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">View Ads & Earn Rewards</h4>
-                    <p className="text-slate-400">Get rewarded in tokens for the ads you view while browsing</p>
-                  </div>
-                </div>
-                
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center">
-                      <span className="text-blue-400 font-bold">4</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Redeem Your Rewards</h4>
-                    <p className="text-slate-400">Cash out your earnings or use them across the ZKads ecosystem</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8">
-                <Button 
-                  asChild
-                  variant="outline" 
-                  className="border-blue-600 hover:bg-blue-600/10 text-blue-400"
-                >
+                ) : (
                   <Link href="/user-dashboard">
-                    Learn More About User Rewards
-                    <ChevronRight className="ml-2 h-4 w-4" />
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 group">
+                      Open User Dashboard
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
                   </Link>
-                </Button>
+                )}
               </div>
             </div>
-            
-            {/* For Advertisers */}
-            <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-8">
-              <div className="flex items-center mb-6">
-                <div className="h-12 w-12 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-400 mr-4">
-                  <LineChart className="h-6 w-6" />
-                </div>
-                <h3 className="text-2xl font-bold">For Advertisers</h3>
-              </div>
+
+            {/* Advertiser Card */}
+            <div className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-500/20 hover:-translate-y-1">
+              <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-gradient-to-br from-purple-500/20 to-purple-600/30 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-purple-500/30 group-hover:to-purple-600/40"></div>
               
-              <div className="space-y-6">
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-purple-600/20 flex items-center justify-center">
-                      <span className="text-purple-400 font-bold">1</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Create Your Campaign</h4>
-                    <p className="text-slate-400">Set up your targeting criteria and upload your ad creatives</p>
-                  </div>
+              <div className="relative">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10 text-purple-400">
+                  <MegaphoneIcon className="h-6 w-6" />
                 </div>
+                <h3 className="mb-2 text-2xl font-bold text-white">For Advertisers</h3>
+                <p className="mb-6 text-slate-300">Target interested audiences without invading privacy</p>
                 
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-purple-600/20 flex items-center justify-center">
-                      <span className="text-purple-400 font-bold">2</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Set Your Budget</h4>
-                    <p className="text-slate-400">Define your spending limits and bidding strategy</p>
-                  </div>
-                </div>
+                <ul className="mb-8 space-y-2">
+                  {['Target by interest, not identity', 'Verifiable engagement metrics', 'Cost-effective campaigns'].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-slate-300">
+                      <CheckCircle2 className="h-4 w-4 text-purple-400" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
                 
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-purple-600/20 flex items-center justify-center">
-                      <span className="text-purple-400 font-bold">3</span>
-                    </div>
+                {mounted && !isConnected ? (
+                  <div className="w-full mb-2">
+                    <ConnectButton label="Connect Wallet" />
                   </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Target by Interest, Not Identity</h4>
-                    <p className="text-slate-400">Reach users who match your criteria without accessing personal data</p>
-                  </div>
-                </div>
-                
-                <div className="flex">
-                  <div className="mr-4 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-purple-600/20 flex items-center justify-center">
-                      <span className="text-purple-400 font-bold">4</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium mb-1">Monitor Performance</h4>
-                    <p className="text-slate-400">Track campaign metrics through our advanced analytics dashboard</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8">
-                <Button 
-                  asChild
-                  variant="outline" 
-                  className="border-purple-600 hover:bg-purple-600/10 text-purple-400"
-                >
+                ) : (
                   <Link href="/dashboard">
-                    Learn More About Advertising
-                    <ChevronRight className="ml-2 h-4 w-4" />
+                    <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 group">
+                      Open Advertiser Dashboard
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
                   </Link>
-                </Button>
+                )}
               </div>
             </div>
           </div>
+
+          {/* Extension Callout */}
+          <div className="mt-12 max-w-4xl mx-auto">
+            <div className="relative rounded-2xl border border-slate-800 bg-slate-900/50 overflow-hidden p-6 sm:p-8">
+              <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-500/10 to-indigo-600/20 blur-[50px]"></div>
+              
+              <div className="flex flex-col sm:flex-row gap-6 items-center justify-between relative">
+                <div className="sm:max-w-md">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-8 w-8 bg-indigo-500/10 rounded-md flex items-center justify-center">
+                      <Zap className="h-4 w-4 text-indigo-400" />
+                    </div>
+                    <span className="text-white font-medium">Browser Extension</span>
+                    <span className="text-xs bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full">New</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-2">Start earning rewards instantly</h3>
+                  <p className="text-slate-300 mb-6">Download our browser extension to start viewing privacy-respecting ads and earning tokens immediately.</p>
+                  <a href="#" className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-800 hover:from-indigo-500 hover:to-indigo-700 text-white font-medium transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/20 transform hover:-translate-y-0.5">
+                    Get the Extension
+                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </div>
+                <div className="sm:w-1/3 flex-shrink-0">
+                  <div className="relative h-60 w-full sm:h-72 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
+                      <img 
+                        src="/images/extension-preview.png" 
+                        alt="Browser Extension Preview" 
+                        className="max-h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='400' viewBox='0 0 320 400'%3E%3Crect width='320' height='400' fill='%23222639'/%3E%3Crect x='20' y='20' width='280' height='40' rx='4' fill='%23333852'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%236366F1'/%3E%3Ctext x='60' y='45' font-family='Arial' font-size='16' fill='white'%3EZKads Extension%3C/text%3E%3Crect x='220' y='30' width='60' height='20' rx='10' fill='%236366F1' opacity='0.5'/%3E%3Ctext x='230' y='45' font-family='Arial' font-size='12' fill='white'%3EConnected%3C/text%3E%3Crect x='20' y='80' width='280' height='100' rx='4' fill='%23333852'/%3E%3Crect x='30' y='95' width='70' height='70' rx='4' fill='%232A2B36'/%3E%3Ctext x='110' y='115' font-family='Arial' font-size='16' fill='white'%3ETotalRewards%3C/text%3E%3Ctext x='110' y='145' font-family='Arial' font-size='24' font-weight='bold' fill='%236366F1'%3E125 ZKT%3C/text%3E%3Crect x='30' y='185' width='260' height='10' rx='5' fill='%232A2B36'/%3E%3Crect x='30' y='185' width='180' height='10' rx='5' fill='%236366F1'/%3E%3Crect x='20' y='200' width='280' height='36' rx='4' fill='%23373A48'/%3E%3Ctext x='40' y='223' font-family='Arial' font-size='14' fill='white'%3ERedeem Rewards%3C/text%3E%3Crect x='20' y='250' width='280' height='150' rx='4' fill='%232A2B36'/%3E%3Crect x='30' y='260' width='80' height='25' rx='12' fill='%23373A48'/%3E%3Ctext x='48' y='277' font-family='Arial' font-size='12' fill='white'%3ERecent Ads%3C/text%3E%3Crect x='120' y='260' width='80' height='25' rx='12' fill='%236366F1'/%3E%3Ctext x='138' y='277' font-family='Arial' font-size='12' fill='white'%3EEarnings%3C/text%3E%3Cline x1='40' y1='305' x2='280' y2='305' stroke='%23373A48' stroke-width='1'/%3E%3Ctext x='40' y='325' font-family='Arial' font-size='12' fill='white'%3EWeb3 Platform Ad%3C/text%3E%3Ctext x='40' y='345' font-family='Arial' font-size='10' fill='%23999'%3E1 hour ago · 2.5 ZKT earned%3C/text%3E%3Cline x1='40' y1='365' x2='280' y2='365' stroke='%23373A48' stroke-width='1'/%3E%3Ctext x='40' y='385' font-family='Arial' font-size='12' fill='white'%3ENFT Marketplace Ad%3C/text%3E%3C/svg%3E";
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Learn More Arrow */}
+          <div className="flex justify-center mt-12">
+            <a href="#features" className="flex flex-col items-center text-slate-400 hover:text-white transition-colors">
+              <span className="text-xs mb-2">Learn More</span>
+              <ChevronRight className="h-5 w-5 rotate-90 animate-bounce" />
+            </a>
+          </div>
         </div>
       </section>
-      
+
       {/* Features Section */}
-      <section className="w-full py-20 bg-gradient-to-b from-slate-950 to-slate-900">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Key Features
+      <section id="features" className="py-20 relative">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-lg mx-auto text-center mb-16">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 mb-4">
+              Sovereign Adseign Ads Features
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+              Privacy & Rewards Combined
             </h2>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-              Innovative technology for a new age of digital advertising
+            <p className="text-slate-300">
+              Our platform combines zero-knowledge technology with rewards to create a win-win for everyone
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card-hover bg-slate-900/50 rounded-xl border border-slate-800 p-8">
-              <div className="bg-blue-500/10 w-14 h-14 rounded-lg mb-6 flex items-center justify-center">
-                <ShieldCheck className="h-8 w-8 text-blue-400" />
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="feature-card bg-slate-900/50 border border-slate-800 rounded-xl p-6 transition-all hover:border-blue-500/20 hover:-translate-y-1 hover:shadow-md hover:shadow-blue-900/10">
+              <div className="mb-4 bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center text-blue-400">
+                <ShieldCheck className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Privacy-Preserving</h3>
-              <p className="text-slate-300">
-                Zero-knowledge proofs verify ad matching without revealing user data, keeping personal information completely private.
-              </p>
+              <h3 className="text-xl font-bold mb-2">Zero-Knowledge Proofs</h3>
+              <p className="text-slate-300">Your data never leaves your device. We verify engagement without accessing personal information.</p>
             </div>
-            
-            <div className="card-hover bg-slate-900/50 rounded-xl border border-slate-800 p-8">
-              <div className="bg-purple-500/10 w-14 h-14 rounded-lg mb-6 flex items-center justify-center">
-                <Gift className="h-8 w-8 text-purple-400" />
+
+            <div className="feature-card bg-slate-900/50 border border-slate-800 rounded-xl p-6 transition-all hover:border-purple-500/20 hover:-translate-y-1 hover:shadow-md hover:shadow-purple-900/10">
+              <div className="mb-4 bg-purple-500/10 w-12 h-12 rounded-lg flex items-center justify-center text-purple-400">
+                <Gift className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-white">User Rewards</h3>
-              <p className="text-slate-300">
-                Users earn tokens for their attention, creating a fair value exchange for participating in the ad ecosystem.
-              </p>
+              <h3 className="text-xl font-bold mb-2">Token Rewards</h3>
+              <p className="text-slate-300">Earn ZKT tokens for every ad you view. Cash out or use them across our ecosystem.</p>
             </div>
-            
-            <div className="card-hover bg-slate-900/50 rounded-xl border border-slate-800 p-8">
-              <div className="bg-yellow-500/10 w-14 h-14 rounded-lg mb-6 flex items-center justify-center">
-                <LockKeyhole className="h-8 w-8 text-yellow-400" />
+
+            <div className="feature-card bg-slate-900/50 border border-slate-800 rounded-xl p-6 transition-all hover:border-indigo-500/20 hover:-translate-y-1 hover:shadow-md hover:shadow-indigo-900/10">
+              <div className="mb-4 bg-indigo-500/10 w-12 h-12 rounded-lg flex items-center justify-center text-indigo-400">
+                <Globe className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Blockchain Secured</h3>
-              <p className="text-slate-300">
-                All transactions and proof verifications are secured on the blockchain for transparency and trust.
-              </p>
+              <h3 className="text-xl font-bold mb-2">Decentralized Ads</h3>
+              <p className="text-slate-300">Our marketplace connects advertisers directly with users, removing the need for intrusive middlemen.</p>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Testimonials Section */}
-      <section className="w-full py-20 bg-slate-900">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Loved by Users & Advertisers
+
+      {/* How It Works - Simplified */}
+      <section className="py-20 bg-slate-950 relative">
+        <div className="absolute left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="max-w-lg mx-auto text-center mb-16">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 mb-4">
+              Simple Process
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              How It Works
             </h2>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-              See what our community is saying about ZKads
+            <p className="text-slate-300">
+              Get started in just a few simple steps
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center mr-3">
-                  <span className="text-white font-bold">S</span>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {[
+              { 
+                icon: <MousePointer className="h-6 w-6" />, 
+                title: "Connect Wallet", 
+                desc: "Link your Web3 wallet to start" 
+              },
+              { 
+                icon: <Eye className="h-6 w-6" />, 
+                title: "View Ads", 
+                desc: "See relevant ads while browsing" 
+              },
+              { 
+                icon: <ShieldCheck className="h-6 w-6" />, 
+                title: "Privacy Preserved", 
+                desc: "Your data never leaves your device" 
+              },
+              { 
+                icon: <Gift className="h-6 w-6" />, 
+                title: "Earn Rewards", 
+                desc: "Get ZKT tokens automatically" 
+              }
+            ].map((step, i) => (
+              <div key={i} className="relative">
+                <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 h-full">
+                  <div className="mb-4 flex justify-between items-center">
+                    <div className="bg-indigo-500/10 w-12 h-12 rounded-lg flex items-center justify-center text-indigo-400">
+                      {step.icon}
+                    </div>
+                    <span className="text-3xl font-bold text-slate-700">{i+1}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                  <p className="text-slate-400">{step.desc}</p>
                 </div>
-                <div>
-                  <h4 className="font-medium">Sarah K.</h4>
-                  <p className="text-sm text-slate-400">User</p>
-                </div>
+                {i < 3 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-20">
+                    <ArrowRight className="h-6 w-6 text-slate-600" />
+                  </div>
+                )}
               </div>
-              <p className="text-slate-300">
-                "I love that I can earn rewards just for seeing ads that are actually relevant to me. And knowing my data stays private is a huge plus!"
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Simplified */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-slate-900/80 to-purple-900/30"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="max-w-4xl mx-auto bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 sm:p-10">
+            <div className="text-center">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+                Ready to Get Started?
+              </h2>
+              <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
+                Choose your path and join the privacy-first advertising revolution
               </p>
-            </div>
-            
-            <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center mr-3">
-                  <span className="text-white font-bold">M</span>
-                </div>
-                <div>
-                  <h4 className="font-medium">Michael T.</h4>
-                  <p className="text-sm text-slate-400">Advertiser</p>
-                </div>
+              
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link href="/user-dashboard" className="flex-1 sm:flex-initial group">
+                  <Button className="w-full sm:w-auto min-w-[180px] bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white px-8 py-6 text-lg rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20 transform group-hover:-translate-y-0.5">
+                    For Users
+                    <Gift className="ml-2 h-5 w-5 transition-transform group-hover:scale-110" />
+                  </Button>
+                </Link>
+                
+                <Link href="/dashboard" className="flex-1 sm:flex-initial group">
+                  <Button className="w-full sm:w-auto min-w-[180px] bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/20 transform group-hover:-translate-y-0.5">
+                    For Advertisers
+                    <MegaphoneIcon className="ml-2 h-5 w-5 transition-transform group-hover:scale-110" />
+                  </Button>
+                </Link>
               </div>
-              <p className="text-slate-300">
-                "ZKads has transformed our approach to digital marketing. We're reaching the right audiences while respecting privacy, and our ROI has never been better."
-              </p>
-            </div>
-            
-            <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center mr-3">
-                  <span className="text-white font-bold">L</span>
-                </div>
-                <div>
-                  <h4 className="font-medium">Lisa R.</h4>
-                  <p className="text-sm text-slate-400">User</p>
-                </div>
-              </div>
-              <p className="text-slate-300">
-                "I've earned enough tokens to cover my monthly streaming subscription. It's amazing to finally get value from my online attention."
-              </p>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* CTA Section */}
-      <section className="w-full py-20 bg-gradient-to-br from-blue-900/40 to-purple-900/40">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Ready to Get Started?
-          </h2>
-          <p className="text-lg text-slate-300 mb-10 max-w-2xl mx-auto">
-            Join the privacy-first advertising revolution today
-          </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Button 
-              asChild
-              className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-8 py-6 text-lg rounded-lg"
-            >
-              <Link href="/user-dashboard">
-                For Users
-                <Gift className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            
-            <Button 
-              asChild
-              className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white px-8 py-6 text-lg rounded-lg"
-            >
-              <Link href="/dashboard">
-                For Advertisers
-                <LineChart className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-      
-      {/* Footer */}
-      <footer className="w-full py-12 bg-slate-950 border-t border-slate-800">
-        <div className="container mx-auto px-6">
+
+      {/* Simple Footer */}
+      <footer className="py-12 bg-slate-950 border-t border-slate-800">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-6 md:mb-0">
-              <Sparkles className="h-6 w-6 text-blue-400 mr-2" />
+              <Sparkles className="h-5 w-5 text-indigo-400 mr-2" />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                ZKads
+                Sovereign Adseign Ads
               </span>
             </div>
             
-            <div className="flex gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               <Link href="#" className="text-slate-400 hover:text-white transition-colors">
-                Privacy Policy
+                Privacy
               </Link>
               <Link href="#" className="text-slate-400 hover:text-white transition-colors">
-                Terms of Service
+                Terms
               </Link>
               <Link href="#" className="text-slate-400 hover:text-white transition-colors">
                 Contact
@@ -485,7 +345,7 @@ export default function Home() {
           </div>
           
           <div className="mt-8 text-center text-slate-500 text-sm">
-            &copy; {new Date().getFullYear()} ZKads. All rights reserved.
+            &copy; {new Date().getFullYear()} Sovereign Adseign Ads. All rights reserved.
           </div>
         </div>
       </footer>

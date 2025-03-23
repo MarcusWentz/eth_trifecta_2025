@@ -311,7 +311,7 @@ export default function InterestsPage() {
                         <div className="flex items-center gap-2 mb-4">
                           <Info className="h-5 w-5 text-amber-500" />
                           <p className="text-sm text-slate-300">
-                            ZKads uses zero-knowledge proofs to verify ad views while preserving your privacy.
+                            Sovereign Ads uses zero-knowledge proofs to verify ad views while preserving your privacy.
                             Your wallet address is never shared with advertisers.
                           </p>
                         </div>
