@@ -17,6 +17,7 @@ use serde::{Deserialize, Serialize};
 use sp1_sdk::{
     include_elf, HashableKey, ProverClient, SP1ProofWithPublicValues, SP1Stdin, SP1VerifyingKey,
 };
+use alloy_primitives::FixedBytes;
 use std::path::PathBuf;
 
 /// The ELF (executable and linkable format) file for the Succinct RISC-V zkVM.
@@ -26,10 +27,14 @@ pub const AD_QUALIFICATION_ELF: &[u8] = include_elf!("ad-qualification-program")
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct EVMArgs {
-    #[clap(long, default_value = "20")]
-    n: u32,
     #[clap(long, value_enum, default_value = "groth16")]
     system: ProofSystem,
+
+    #[clap(long)]
+    user_data: String,
+
+    #[clap(long)]
+    criteria: String,
 }
 
 /// Enum representing the available proof systems
@@ -42,10 +47,9 @@ enum ProofSystem {
 /// A fixture that can be used to test the verification of SP1 zkVM proofs inside Solidity.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-struct SP1FibonacciProofFixture {
-    a: u32,
-    b: u32,
-    n: u32,
+struct SP1AdQualificationProofFixture {
+    user_data_hash: String,
+    criteria_hash: String,
     vkey: String,
     public_values: String,
     proof: String,
@@ -66,9 +70,9 @@ fn main() {
 
     // Setup the inputs.
     let mut stdin = SP1Stdin::new();
-    stdin.write(&args.n);
+    stdin.write(&args.user_data);
+    stdin.write(&args.criteria);
 
-    println!("n: {}", args.n);
     println!("Proof System: {:?}", args.system);
 
     // Generate the proof based on the selected proof system.
@@ -89,13 +93,12 @@ fn create_proof_fixture(
 ) {
     // Deserialize the public values.
     let bytes = proof.public_values.as_slice();
-    let PublicValuesStruct { n, a, b } = PublicValuesStruct::abi_decode(bytes, false).unwrap();
+    let PublicValuesStruct { user_data_hash, criteria_hash } = PublicValuesStruct::abi_decode(bytes, false).unwrap();
 
     // Create the testing fixture so we can test things end-to-end.
-    let fixture = SP1FibonacciProofFixture {
-        a,
-        b,
-        n,
+    let fixture = SP1AdQualificationProofFixture {
+        user_data_hash: user_data_hash.to_string(),
+        criteria_hash: criteria_hash.to_string(),
         vkey: vk.bytes32().to_string(),
         public_values: format!("0x{}", hex::encode(bytes)),
         proof: format!("0x{}", hex::encode(proof.bytes())),

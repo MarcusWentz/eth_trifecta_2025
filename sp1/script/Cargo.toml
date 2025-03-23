@@ -26,6 +26,7 @@ hex = "0.4.3"
 alloy-sol-types = { workspace = true }
 ad-qualification-lib = { path = "../lib" }
 dotenv = "0.15.0"
+alloy-primitives = { workspace = true }
 
 [build-dependencies]
 sp1-build = "4.0.0"
