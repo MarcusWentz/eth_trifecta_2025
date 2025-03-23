@@ -27,7 +27,16 @@ import {
   RefreshCw,
   ChevronRight,
   ArrowRightLeft,
-  PlusCircle
+  PlusCircle,
+  MapPin,
+  Info,
+  Loader2,
+  History,
+  Target,
+  Clock,
+  Settings,
+  Globe,
+  Sparkles
 } from "lucide-react"
 import { 
   Dialog, 
@@ -41,16 +50,39 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Slider } from "@/components/ui/slider"
+import { Switch } from "@/components/ui/switch"
+import { useRouter } from "next/navigation"
+import { Toast } from "@/components/ui/toast-notification"
 
 export default function WalletsPage() {
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
+  const router = useRouter()
   const [mounted, setMounted] = useState(false)
   const [copySuccess, setCopySuccess] = useState(false)
   const [activeTab, setActiveTab] = useState("wallets")
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false)
   const [transferAmount, setTransferAmount] = useState("")
   const [recipientAddress, setRecipientAddress] = useState("")
+  
+  // New state for user preferences
+  const [age, setAge] = useState<number>(25)
+  const [locationPermission, setLocationPermission] = useState<boolean>(false)
+  const [latitude, setLatitude] = useState<string>("")
+  const [longitude, setLongitude] = useState<string>("")
+  const [targetedSites, setTargetedSites] = useState<string>("")
+  const [allowPersonalization, setAllowPersonalization] = useState<boolean>(true)
+  const [preferenceLoading, setPreferenceLoading] = useState<boolean>(false)
+  const [preferenceError, setPreferenceError] = useState<string>("")
+  const [preferenceSuccess, setPreferenceSuccess] = useState<boolean>(false)
+
+  // State for toast notification
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
+  const [toastVariant, setToastVariant] = useState<"success" | "error">("success")
 
   // Sample transaction history data
   const transactions = [
@@ -108,7 +140,118 @@ export default function WalletsPage() {
 
   useEffect(() => {
     setMounted(true)
+    
+    // Check if navigator and geolocation are available
+    if (typeof navigator !== 'undefined' && navigator.geolocation) {
+      navigator.permissions?.query({ name: 'geolocation' })
+        .then(permissionStatus => {
+          setLocationPermission(permissionStatus.state === "granted")
+          
+          if (permissionStatus.state === "granted") {
+            getCurrentLocation()
+          }
+        })
+        .catch(err => {
+          console.error("Permission error:", err)
+        })
+    }
   }, [])
+  
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude.toString())
+          setLongitude(position.coords.longitude.toString())
+          setPreferenceError("")
+        },
+        (error) => {
+          console.error("Error getting location:", error)
+          setPreferenceError("Unable to get your location. Please enter coordinates manually.")
+          setLocationPermission(false)
+        }
+      )
+    }
+  }
+  
+  const handleUserPreferencesSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPreferenceLoading(true)
+    setPreferenceError("")
+    setPreferenceSuccess(false)
+    
+    try {
+      // Validate inputs
+      if (!age || age < 18 || age > 100) {
+        throw new Error("Please enter a valid age between 18 and 100")
+      }
+      
+      // Only validate location if permission is granted
+      if (locationPermission) {
+        if (!latitude || !longitude) {
+          throw new Error("Location coordinates are required")
+        }
+        
+        const lat = parseFloat(latitude)
+        const lng = parseFloat(longitude)
+        
+        if (isNaN(lat) || isNaN(lng)) {
+          throw new Error("Location coordinates must be valid numbers")
+        }
+        
+        if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+          throw new Error("Location coordinates are out of valid range")
+        }
+      }
+      
+      // Prepare domains list
+      const domains = targetedSites
+        .split(',')
+        .map(domain => domain.trim())
+        .filter(domain => domain.length > 0)
+      
+      // Prepare user preferences data
+      const preferencesData = {
+        age,
+        location: locationPermission ? { latitude: parseFloat(latitude), longitude: parseFloat(longitude) } : null,
+        targeted_sites: domains,
+        allow_personalization: allowPersonalization
+      }
+      
+      console.log("Sending user preferences:", preferencesData)
+      
+      const response = await fetch("http://localhost:8080/api/user-preferences", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(preferencesData),
+      })
+      
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`)
+      }
+      
+      const data = await response.json()
+      console.log("Success:", data)
+      
+      // Show success toast instead of inline message
+      setToastMessage("Preferences saved successfully!")
+      setToastVariant("success")
+      setShowToast(true)
+      setPreferenceSuccess(true)
+      
+    } catch (error) {
+      setPreferenceError(error instanceof Error ? error.message : "Failed to save preferences")
+      
+      // Show error toast
+      setToastMessage(error instanceof Error ? error.message : "Failed to save preferences")
+      setToastVariant("error")
+      setShowToast(true)
+    } finally {
+      setPreferenceLoading(false)
+    }
+  }
 
   if (!mounted) return null
 
@@ -390,23 +533,27 @@ export default function WalletsPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="transactions" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="bg-slate-800/50 border border-slate-700 mb-6">
-          <TabsTrigger
-            value="transactions"
-            className="data-[state=active]:bg-indigo-600"
-          >
-            Transaction History
+      <Tabs defaultValue="wallets" onValueChange={setActiveTab} value={activeTab}>
+        <TabsList className="bg-slate-900/80 border border-slate-800">
+          <TabsTrigger value="wallets">
+            <Wallet className="h-4 w-4 mr-2" />
+            Wallets
           </TabsTrigger>
-          <TabsTrigger
-            value="settings"
-            className="data-[state=active]:bg-indigo-600"
-          >
-            Wallet Settings
+          <TabsTrigger value="transactions">
+            <History className="h-4 w-4 mr-2" />
+            Transactions
+          </TabsTrigger>
+          <TabsTrigger value="settings">
+            <Settings className="h-4 w-4 mr-2" />
+            Settings
+          </TabsTrigger>
+          <TabsTrigger value="preferences">
+            <Target className="h-4 w-4 mr-2" />
+            Ad Preferences
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="transactions" className="mt-0">
+        <TabsContent value="wallets" className="mt-0">
           <Card className="bg-slate-900/50 border-slate-800">
             <CardHeader className="pb-0">
               <div className="flex justify-between items-center">
@@ -575,6 +722,182 @@ export default function WalletsPage() {
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="preferences" className="space-y-4">
+          <form onSubmit={handleUserPreferencesSubmit}>
+            <Card className="bg-slate-900/50 border-slate-800">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Target className="h-5 w-5 mr-2 text-indigo-400" />
+                  Ad Preferences
+                </CardTitle>
+                <CardDescription>
+                  Customize your ad experience while maintaining privacy
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 p-4 text-sm">
+                  <h4 className="font-medium text-indigo-400 mb-1">Privacy-First Customization</h4>
+                  <p className="text-slate-300">
+                    Your preferences are processed using zero-knowledge proofs, ensuring advertisers never access your raw data.
+                  </p>
+                </div>
+              
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <Label htmlFor="age">Age: {age}</Label>
+                      <Badge variant="outline" className="bg-slate-800/80">{age} years</Badge>
+                    </div>
+                    <Slider
+                      id="age"
+                      min={18}
+                      max={100}
+                      step={1}
+                      value={[age]}
+                      onValueChange={(value) => setAge(value[0])}
+                    />
+                    <p className="text-xs text-slate-400">
+                      Age helps match you with age-appropriate and relevant content
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 pb-4 border-b border-slate-800">
+                    <Label className="flex flex-row items-center justify-between">
+                      <div>
+                        <span className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-2 text-indigo-400" />
+                          Share Location
+                        </span>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Allows for local offers and content relevant to your area
+                        </p>
+                      </div>
+                      <Switch
+                        checked={locationPermission}
+                        onCheckedChange={setLocationPermission}
+                      />
+                    </Label>
+                    
+                    {locationPermission && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="latitude">Latitude</Label>
+                          <div className="flex gap-2">
+                            <Input
+                              id="latitude"
+                              placeholder="e.g. 37.7749"
+                              value={latitude}
+                              onChange={(e) => setLatitude(e.target.value)}
+                              className="bg-slate-950 border-slate-800"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="longitude">Longitude</Label>
+                          <div className="flex gap-2">
+                            <Input
+                              id="longitude"
+                              placeholder="e.g. -122.4194"
+                              value={longitude}
+                              onChange={(e) => setLongitude(e.target.value)}
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={getCurrentLocation}
+                              className="bg-slate-800 hover:bg-slate-700 border-slate-700"
+                              title="Use my current location"
+                            >
+                              <MapPin className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-2 pt-2">
+                    <Label htmlFor="targeted-sites" className="flex items-center">
+                      <Globe className="h-4 w-4 mr-2 text-indigo-400" />
+                      Preferred Websites
+                    </Label>
+                    <Textarea
+                      id="targeted-sites"
+                      placeholder="e.g. github.com, netflix.com, amazon.com (comma separated)"
+                      value={targetedSites}
+                      onChange={(e) => setTargetedSites(e.target.value)}
+                      className="h-20 bg-slate-950 border-slate-800"
+                    />
+                    <p className="text-xs text-slate-400">
+                      Enter websites where you'd like to see ads (comma separated). This helps match you with content from advertisers you might be interested in.
+                    </p>
+                  </div>
+                  
+                  <div className="pt-2">
+                    <Label className="flex flex-row items-center justify-between">
+                      <div>
+                        <span className="flex items-center">
+                          <Sparkles className="h-4 w-4 mr-2 text-indigo-400" />
+                          Allow Personalized Ads
+                        </span>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Improves relevance of ads using zero-knowledge targeting
+                        </p>
+                      </div>
+                      <Switch
+                        checked={allowPersonalization}
+                        onCheckedChange={setAllowPersonalization}
+                      />
+                    </Label>
+                  </div>
+                  
+                  <div className="rounded-lg bg-slate-800/50 border border-slate-700 p-4 text-sm mt-4">
+                    <h4 className="font-medium text-slate-300 mb-1 flex items-center">
+                      <Shield className="h-4 w-4 mr-2 text-green-400" />
+                      Privacy Protection
+                    </h4>
+                    <p className="text-slate-400">
+                      Unlike traditional ad platforms, ZKads processes all your preferences using secure zero-knowledge protocols. Advertisers can target relevant audiences without ever accessing or storing your personal data.
+                    </p>
+                  </div>
+                </div>
+                
+                {preferenceError && (
+                  <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-md flex items-start">
+                    <AlertCircle className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
+                    <span>{preferenceError}</span>
+                  </div>
+                )}
+                
+                {preferenceSuccess && (
+                  <div className="bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-3 rounded-md flex items-center">
+                    <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0" />
+                    <span>Preferences saved successfully!</span>
+                  </div>
+                )}
+                
+                <Button
+                  type="submit"
+                  disabled={preferenceLoading}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                >
+                  {preferenceLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Saving Preferences...
+                    </>
+                  ) : (
+                    <>
+                      Save Preferences
+                      <ChevronRight className="h-4 w-4 ml-2" />
+                    </>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+          </form>
+        </TabsContent>
       </Tabs>
 
       <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
@@ -648,6 +971,18 @@ export default function WalletsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Toast notification */}
+      {showToast && (
+        <Toast 
+          variant={toastVariant}
+          position="top-center"
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
+          autoClose={true}
+          autoCloseTime={5000}
+        />
+      )}
     </div>
   )
 } 

@@ -14,9 +14,27 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { CalendarIcon, UploadCloud } from "lucide-react"
+import { CalendarIcon, UploadCloud, Shield, Globe, MapPin, Plus, Trash } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { 
+  Upload, 
+  Image, 
+  FileText, 
+  Users, 
+  Target, 
+  Loader2, 
+  Info, 
+  Sparkles
+} from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 export default function CreateAdPage() {
   const { isConnected } = useAccount()
@@ -39,6 +57,21 @@ export default function CreateAdPage() {
   const [adMedia, setAdMedia] = useState<File | null>(null)
   const [isPrivacyPreserving, setIsPrivacyPreserving] = useState(true)
 
+  // Demographics targeting state
+  const [minAge, setMinAge] = useState("18")
+  const [maxAge, setMaxAge] = useState("65")
+  const [targetDomains, setTargetDomains] = useState("")
+  
+  // Geofencing state
+  const [coordinates, setCoordinates] = useState<[number, number][]>([])
+  const [newLat, setNewLat] = useState("")
+  const [newLng, setNewLng] = useState("")
+  
+  // Form submission state
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -50,30 +83,111 @@ export default function CreateAdPage() {
     }
   }, [isConnected, mounted, router])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Submit ad campaign
-    console.log({
-      adTitle,
-      adDescription,
-      budget,
-      targetAudience,
-      endDate: date,
-      isPrivacyPreserving
-    })
-    // Reset form
-    setAdTitle("")
-    setAdDescription("")
-    setBudget(500)
-    setTargetAudience({
-      ageMin: 18,
-      ageMax: 65,
-      interestTags: [""],
-      locations: [""],
-    })
-    setAdMedia(null)
-    // Redirect to dashboard
-    router.push('/dashboard')
+    setLoading(true)
+    setError("")
+    setSuccess(false)
+    
+    // Validate form
+    if (!adTitle || !adDescription || !budget || !targetAudience.interestTags.length || !targetAudience.locations.length || !coordinates.length) {
+      setError("Please fill in all required fields")
+      setLoading(false)
+      return
+    }
+    
+    // Additional validation for coordinates if targeting tab is active
+    if (coordinates.length < 3) {
+      setError("Please add at least 3 coordinates for geofencing")
+      setLoading(false)
+      return
+    }
+    
+    // Prepare domain list
+    const domains = targetDomains
+      .split(',')
+      .map(domain => domain.trim())
+      .filter(domain => domain.length > 0)
+    
+    // Prepare campaign data
+    const campaignData = {
+      title: adTitle,
+      description: adDescription,
+      budget: budget.toString(),
+      image_url: adMedia ? URL.createObjectURL(adMedia) : '',
+      cta_text: 'Learn More',
+      cta_url: 'https://example.com',
+      format: 'display',
+      targeting: {
+        age_range: [parseInt(minAge), parseInt(maxAge)],
+        geofence: coordinates,
+        target_domains: domains
+      }
+    }
+    
+    try {
+      const res = await fetch("http://localhost:8080/api/campaigns", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(campaignData),
+      })
+      
+      if (!res.ok) {
+        throw new Error(`Server responded with status: ${res.status}`)
+      }
+      
+      const data = await res.json()
+      console.log("Success:", data)
+      setSuccess(true)
+      
+      // Redirect to success page after a brief delay to show success message
+      setTimeout(() => {
+        // Convert all values to strings to avoid type issues
+        const campaignId = data.id ? String(data.id) : '123456';
+        const budgetStr = String(budget);
+        const minAgeStr = String(minAge);
+        const maxAgeStr = String(maxAge);
+        const domainsStr = domains.join(',');
+        
+        // Create the URL with query parameters
+        const url = `/dashboard/campaign-success?id=${campaignId}&title=${encodeURIComponent(adTitle)}&budget=${budgetStr}&minAge=${minAgeStr}&maxAge=${maxAgeStr}&domains=${encodeURIComponent(domainsStr)}`;
+        router.push(url);
+      }, 1500)
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create campaign")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const addCoordinate = () => {
+    if (newLat && newLng) {
+      try {
+        const lat = parseFloat(newLat)
+        const lng = parseFloat(newLng)
+        
+        if (isNaN(lat) || isNaN(lng)) {
+          throw new Error("Coordinates must be valid numbers")
+        }
+        
+        if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+          throw new Error("Coordinates out of valid range")
+        }
+        
+        setCoordinates([...coordinates, [lat, lng]])
+        setNewLat("")
+        setNewLng("")
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Invalid coordinates")
+      }
+    }
+  }
+  
+  const removeCoordinate = (index: number) => {
+    setCoordinates(coordinates.filter((_, i) => i !== index))
   }
 
   if (!mounted || !isConnected) {
@@ -337,12 +451,309 @@ export default function CreateAdPage() {
               </CardContent>
             </Card>
             
-            <Button 
-              type="submit" 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            >
-              Create Campaign
-            </Button>
+            <Card className="bg-slate-900/50 border-slate-800">
+              <CardHeader>
+                <CardTitle>Target Websites</CardTitle>
+                <CardDescription>
+                  Define websites where your target audience is likely to visit
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="target-domains">Websites (comma separated)</Label>
+                  <Textarea
+                    id="target-domains"
+                    placeholder="e.g. github.com, netflix.com, amazon.com"
+                    value={targetDomains}
+                    onChange={(e) => setTargetDomains(e.target.value)}
+                    className="h-20 bg-slate-800/50 border-slate-700"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-slate-900/50 border-slate-800">
+              <CardHeader>
+                <CardTitle>Geographic Targeting</CardTitle>
+                <CardDescription>
+                  Define a geofence for your campaign (add at least 3 points)
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="new-lat">Latitude</Label>
+                      <Input
+                        id="new-lat"
+                        placeholder="e.g. 37.7749"
+                        value={newLat}
+                        onChange={(e) => setNewLat(e.target.value)}
+                        className="bg-slate-800/50 border-slate-700"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="new-lng">Longitude</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="new-lng"
+                          placeholder="e.g. -122.4194"
+                          value={newLng}
+                          onChange={(e) => setNewLng(e.target.value)}
+                          className="bg-slate-800/50 border-slate-700"
+                        />
+                        <Button 
+                          type="button"
+                          onClick={addCoordinate}
+                          variant="outline"
+                          className="bg-slate-800 hover:bg-slate-700 border-slate-700"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="rounded-md border border-slate-800 bg-slate-900 p-4">
+                    <h4 className="text-sm font-medium mb-2 flex items-center">
+                      <MapPin className="h-4 w-4 mr-2 text-indigo-400" />
+                      Geofence Coordinates
+                    </h4>
+                    
+                    {coordinates.length === 0 ? (
+                      <p className="text-sm text-slate-400 italic">No coordinates added yet</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {coordinates.map((coord, index) => (
+                          <div key={index} className="flex items-center justify-between rounded bg-slate-900 px-3 py-2">
+                            <code className="text-xs text-slate-300">
+                              [{coord[0].toFixed(6)}, {coord[1].toFixed(6)}]
+                            </code>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeCoordinate(index)}
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-red-400"
+                            >
+                              <Trash className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <div className="mt-2 text-xs text-slate-400 flex items-center">
+                      <Info className="h-3 w-3 mr-1 text-amber-500" />
+                      {coordinates.length < 3 
+                        ? `Add at least ${3 - coordinates.length} more ${coordinates.length === 2 ? 'point' : 'points'} to create a geofence`
+                        : 'Geofence is valid with minimum 3 points'
+                      }
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <TabsContent value="targeting" className="space-y-4">
+              <div className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 p-4 text-sm mb-4">
+                <h4 className="font-medium text-indigo-400 mb-1 flex items-center">
+                  <Shield className="h-4 w-4 mr-2" />
+                  Privacy-Preserving Targeting
+                </h4>
+                <p className="text-slate-300">
+                  ZKads uses zero-knowledge proofs to match your campaign with users who match your criteria, without ever revealing their personal data.
+                </p>
+              </div>
+              
+              <Card className="bg-slate-900/50 border-slate-800">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Users className="h-5 w-5 mr-2 text-indigo-400" />
+                    Demographic Targeting
+                  </CardTitle>
+                  <CardDescription>
+                    Define your target audience with privacy-preserving demographics
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <Label>Age Range ({minAge} - {maxAge})</Label>
+                        <span className="text-sm text-slate-400">{minAge} - {maxAge} years</span>
+                      </div>
+                      <div className="flex gap-4 items-center">
+                        <Input
+                          type="number"
+                          min="18"
+                          max="100"
+                          value={minAge}
+                          onChange={(e) => setMinAge(e.target.value)}
+                          className="w-20 bg-slate-950 border-slate-800"
+                        />
+                        <Slider 
+                          min={18}
+                          max={100}
+                          step={1}
+                          value={[parseInt(minAge), parseInt(maxAge)]}
+                          onValueChange={(value) => {
+                            setMinAge(value[0].toString())
+                            setMaxAge(value[1].toString())
+                          }}
+                          className="flex-1"
+                        />
+                        <Input
+                          type="number"
+                          min="18"
+                          max="100"
+                          value={maxAge}
+                          onChange={(e) => setMaxAge(e.target.value)}
+                          className="w-20 bg-slate-950 border-slate-800"
+                        />
+                      </div>
+                      <p className="text-xs text-slate-400 mt-1">
+                        Target users within a specific age range. Users' actual age is never revealed to advertisers.
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="target-domains" className="flex items-center">
+                        <Globe className="h-4 w-4 mr-2 text-indigo-400" />
+                        Target Websites
+                      </Label>
+                      <Textarea
+                        id="target-domains"
+                        placeholder="e.g. github.com, netflix.com, amazon.com (comma separated)"
+                        value={targetDomains}
+                        onChange={(e) => setTargetDomains(e.target.value)}
+                        className="h-20 bg-slate-950 border-slate-800"
+                      />
+                      <p className="text-xs text-slate-400">
+                        ZKads will show your ads to users who visit these sites. User browsing history is never shared with advertisers.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-slate-900/50 border-slate-800">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <MapPin className="h-5 w-5 mr-2 text-indigo-400" />
+                    Geographic Targeting
+                  </CardTitle>
+                  <CardDescription>
+                    Define a geofence for your campaign (add at least 3 points)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="new-lat">Latitude</Label>
+                        <Input
+                          id="new-lat"
+                          placeholder="e.g. 37.7749"
+                          value={newLat}
+                          onChange={(e) => setNewLat(e.target.value)}
+                          className="bg-slate-950 border-slate-800"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="new-lng">Longitude</Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id="new-lng"
+                            placeholder="e.g. -122.4194"
+                            value={newLng}
+                            onChange={(e) => setNewLng(e.target.value)}
+                            className="bg-slate-950 border-slate-800"
+                          />
+                          <Button 
+                            type="button"
+                            onClick={addCoordinate}
+                            variant="outline"
+                            className="bg-slate-800 hover:bg-slate-700 border-slate-700"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-md border border-slate-800 bg-slate-950 p-4">
+                      <h4 className="text-sm font-medium mb-2 flex items-center">
+                        <MapPin className="h-4 w-4 mr-2 text-indigo-400" />
+                        Geofence Coordinates
+                      </h4>
+                      
+                      {coordinates.length === 0 ? (
+                        <p className="text-sm text-slate-400 italic">No coordinates added yet</p>
+                      ) : (
+                        <div className="space-y-2">
+                          {coordinates.map((coord, index) => (
+                            <div key={index} className="flex items-center justify-between rounded bg-slate-900 px-3 py-2">
+                              <code className="text-xs text-slate-300">
+                                [{coord[0].toFixed(6)}, {coord[1].toFixed(6)}]
+                              </code>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeCoordinate(index)}
+                                className="h-7 w-7 p-0 text-slate-400 hover:text-red-400"
+                              >
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="mt-2 text-xs text-slate-400 flex items-center">
+                        <Info className="h-3 w-3 mr-1 text-amber-500" />
+                        {coordinates.length < 3 
+                          ? `Add at least ${3 - coordinates.length} more ${coordinates.length === 2 ? 'point' : 'points'} to create a geofence`
+                          : 'Geofence is valid with minimum 3 points'
+                        }
+                      </div>
+                    </div>
+                    
+                    <p className="text-xs text-slate-400">
+                      ZKads matches your ads with users in the defined geographic area without ever revealing their exact location to advertisers.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            <div className="flex flex-col sm:flex-row gap-3 sm:justify-between pt-4 border-t border-slate-800">
+              <div className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-green-500" />
+                <p className="text-sm text-slate-300">
+                  Your campaign will be matched with users using privacy-preserving zero-knowledge proofs
+                </p>
+              </div>
+              
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Creating Campaign...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Launch Campaign
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </form>
