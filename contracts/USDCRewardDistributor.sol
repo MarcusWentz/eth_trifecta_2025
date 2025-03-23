@@ -19,9 +19,11 @@ contract USDCRewardDistributor {
         owner = msg.sender;
     }
 
-    function claimReward(uint256 amount) external {
+    function claimReward() external {
+        uint256 amount = 10 * 10**18; // 10 USDC (assuming 18 decimal places)
         require(usdc.balanceOf(address(this)) >= amount, "Insufficient contract balance");
         require(usdc.transfer(msg.sender, amount), "Transfer failed");
+
         emit RewardClaimed(msg.sender, amount);
     }
 }
