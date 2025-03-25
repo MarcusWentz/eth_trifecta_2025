@@ -10,12 +10,20 @@ A **privacy-first** advertising network that leverages **zero-knowledge proofs (
 https://www.youtube.com/watch?v=5Fohh25Ta10
 
 ## Problem
+
+Google and other large companies broker user information to advertisers for target audiences.
+If there is a security data breach, this can expose private user data.
+
 Traditional ad networks collect and broker vast amounts of user data, often leading to:
 - Privacy violations and mass surveillance.
 - Risk of data breaches exposing sensitive user information.
 - Profiteering by ad networks at the expense of user security.
 
 ## Solution
+
+Privately verify user data matches target audience data.
+Prove user data JSON files using RISC Zero and SP1 zkVM Rust zero knowledge proving systems.
+
 Traditional digital advertising relies on massive data collection, where companies store and broker user information to target ads. This approach not only threatens user privacy but also creates risks of data breaches and unauthorized data sales.
 
 This project introduces a novel solution by leveraging Zero-Knowledge Proofs (ZKPs) to enable ad targeting without exposing personal data. Users’ data never leaves their devices, yet advertisers can still verify whether a user belongs to a target audience. This ensures privacy while maintaining ad relevance.
